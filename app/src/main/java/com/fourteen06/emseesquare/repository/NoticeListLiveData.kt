@@ -51,7 +51,7 @@ fun Query.asFlow(): Flow<QuerySnapshot> {
             if (ex != null) {
                 close(ex)
             } else {
-                offer(querySnapshot!!)
+                trySend(querySnapshot!!).isSuccess
             }
         }
         awaitClose {

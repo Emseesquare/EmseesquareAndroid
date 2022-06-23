@@ -1,4 +1,4 @@
-package com.fourteen06.emseesquare.presentation
+package com.fourteen06.emseesquare.presentation.notice
 
 import android.text.Spannable
 import android.text.SpannableString
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.NoticeViewBinding
 import com.fourteen06.emseesquare.models.AttachmentType
@@ -46,7 +47,7 @@ class NoticeAdapter() :
                 noticeDescription.text = notice.content
                 when (notice.attachmentType) {
                     is AttachmentType.Image -> {
-
+                        contentImage.load(notice.attachmentType.imageUrl)
                     }
                     AttachmentType.None -> {
                         imageHolderCardView.visibility = View.GONE
