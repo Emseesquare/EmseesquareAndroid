@@ -9,7 +9,8 @@ import com.fourteen06.emseesquare.presentation.HomeFragment
 import com.fourteen06.emseesquare.presentation.MessageFragment
 import com.fourteen06.emseesquare.presentation.ProfileFragment
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var homeFragment: HomeFragment
     private lateinit var messageFragment: MessageFragment
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.appBarMain.toolbar)
         if (savedInstanceState == null) {
             homeFragment = HomeFragment()
             messageFragment = MessageFragment()
