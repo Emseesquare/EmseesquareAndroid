@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="notice_member_name_font_size">15sp</dimen>
+    <dimen name="notice_member_position_font_size">13sp</dimen>
+    <dimen name="notice_member_description_font_size">13sp</dimen>
+</resources>

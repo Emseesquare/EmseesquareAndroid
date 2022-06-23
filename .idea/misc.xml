@@ -3,7 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3421875" />
+        <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_message.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_people_alt.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_person.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_pin_filled.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_pin_outlined.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_welcome_emseesquare__your_college_go_through_app_.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_community.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_login_with_phone_number.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_message.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/notice_view.xml" value="0.2" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.3578125" />
+        <entry key="app/src/main/res/menu/btm_nav_menu.xml" value="0.18177083333333333" />
       </map>
     </option>
   </component>

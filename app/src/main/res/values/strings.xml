@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Emseesquare</string>
+    <string name="phone_number_edit_text_hint">Phone Number</string>
+    <string name="phone_number_button_text">Verify Your Phone Number</string>
+    <string name="t_and_c_string">By continuing, you are accepting our Terms and condition and Privacy Policy</string>
+    <string name="title_home">Home</string>
+    <string name="title_message">Message</string>
+    <string name="title_communities">Communities</string>
+    <string name="title_profile">Profile</string>s
 </resources>
