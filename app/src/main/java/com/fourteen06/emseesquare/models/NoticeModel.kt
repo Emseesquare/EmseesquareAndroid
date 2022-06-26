@@ -1,5 +1,7 @@
 package com.fourteen06.emseesquare.models
 
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import java.util.*
 
 data class NoticeModel(
@@ -9,7 +11,44 @@ data class NoticeModel(
     val pins: Int = 0,
     val attachmentType: AttachmentType = AttachmentType.None,
     val user: User? = null
-)
+) {
+    fun toHashMap(): HashMap<String, *> {
+        return hashMapOf(
+            ID to this.id,
+            TIME to this.time,
+            CONTENT to this.content,
+            PINS to this.pins,
+            ATTACHMENT_TYPE to this.attachmentType,
+            USER to user
+        )
+    }
 
-//We organise what we write into sentences and paragraphs. A paragraph begins on a new line within the text and there is often a blank line between paragraphs. A paragraph usually contains more than one sentence and it is usually about one topic.
-//https://firebasestorage.googleapis.com/v0/b/emseesquare-e0913.appspot.com/o/notice_assets%2Fpexels-gije-cho-10836627.jpg?alt=media&token=532e523f-b07b-4f77-8c83-a65b76034c99
+    companion object Factory {
+        fun QueryDocumentSnapshot.toNotice(): NoticeModel {
+            val dataMap = this.data
+            return NoticeModel(
+                id = dataMap[ID] as String,
+                content = dataMap[CONTENT].toString(),
+                time = (dataMap[TIME] as Timestamp).toDate(),
+                attachmentType = when (dataMap[ATTACHMENT_TYPE]) {
+                    1L -> {
+                        AttachmentType.Image(imageUrl = dataMap[IMAGE_URL] as String)
+                    }
+                    2L -> {
+                        AttachmentType.File(fileUrl = dataMap[FILE_URL] as String)
+                    }
+                    else -> {
+                        AttachmentType.None
+                    }
+                }
+            )
+        }
+    }
+}
+
+private const val ID = "id"
+private const val TIME = "time"
+private const val CONTENT = "content"
+private const val PINS = "pins"
+private const val ATTACHMENT_TYPE = "attachmentType"
+private const val USER = "user"
