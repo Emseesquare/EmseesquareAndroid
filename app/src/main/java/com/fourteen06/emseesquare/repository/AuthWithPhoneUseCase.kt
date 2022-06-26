@@ -1,5 +1,6 @@
 package com.fourteen06.emseesquare.repository
 
+import android.app.Activity
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -17,7 +18,7 @@ class AuthWithPhoneUseCase @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) {
     @Throws(FirebaseException::class)
-    suspend operator fun invoke(phoneNumber: String): PhoneAuthResult =
+    suspend operator fun invoke(phoneNumber: String, activity: Activity): PhoneAuthResult =
         suspendCoroutine { cont ->
             val callback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 override fun onVerificationCompleted(credential: PhoneAuthCredential) {
@@ -41,9 +42,10 @@ class AuthWithPhoneUseCase @Inject constructor(
             }
 
             val options = PhoneAuthOptions.newBuilder(firebaseAuth)
-                .setPhoneNumber(phoneNumber)
+                .setPhoneNumber(INDIAN_CODE + phoneNumber)
                 .setTimeout(60L, TimeUnit.SECONDS)
                 .setCallbacks(callback)
+                .setActivity(activity)
                 .build()
 
             PhoneAuthProvider.verifyPhoneNumber(options)
@@ -58,3 +60,5 @@ sealed class PhoneAuthResult {
         val token: PhoneAuthProvider.ForceResendingToken
     ) : PhoneAuthResult()
 }
+
+private const val INDIAN_CODE = "+91"
