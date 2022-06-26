@@ -8,8 +8,9 @@ import com.fourteen06.emseesquare.presentation.CommunityFragment
 import com.fourteen06.emseesquare.presentation.notice.HomeFragment
 import com.fourteen06.emseesquare.presentation.MessageFragment
 import com.fourteen06.emseesquare.presentation.ProfileFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var homeFragment: HomeFragment

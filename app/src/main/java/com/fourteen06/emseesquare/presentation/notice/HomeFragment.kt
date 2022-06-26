@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
     lateinit var noticeAdapter: NoticeAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
