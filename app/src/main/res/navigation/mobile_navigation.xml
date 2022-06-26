@@ -10,5 +10,17 @@
         android:id="@+id/authFragment2"
         android:name="com.fourteen06.emseesquare.presentation.auth.AuthFragment"
         android:label="fragment_login_with_phone_number"
-        tools:layout="@layout/fragment_login_with_phone_number" />
+        tools:layout="@layout/fragment_login_with_phone_number" >
+        <action
+            android:id="@+id/action_authFragment2_to_otpVerifyFragment"
+            app:destination="@id/otpVerifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpVerifyFragment"
+        android:name="com.fourteen06.emseesquare.presentation.auth.OtpVerifyFragment"
+        android:label="OtpVerifyFragment" >
+        <argument
+            android:name="args"
+            app:argType="com.fourteen06.emseesquare.models.AuthNavArgs" />
+    </fragment>
 </navigation>

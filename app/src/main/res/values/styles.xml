@@ -31,7 +31,15 @@
         <item name="android:textAllCaps">false</item>
         <item name="cornerRadius">999dp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:text">@string/phone_number_button_text</item>
+    </style>
+
+    <style name="Auth.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="rippleColor">@color/green_500</item>
+        <item name="strokeColor">@color/green_500</item>
+        <item name="cornerRadius">999dp</item>
+        <item name="android:textColor">@color/green_500</item>
     </style>
     <!--    Widget.MaterialComponents.TextInputLayout.OutlinedBox-->
     <style name="Auth.EditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
