@@ -22,7 +22,7 @@ private val user = User(
     name = "Shashank",
     subTitle = "Teacher",
     profileImageUrl = "",
-    role = UserRole.Student,
+//    role = UserRole.Student,
     instituteName = "First",
     instituteId = "1"
 )

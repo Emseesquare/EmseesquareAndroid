@@ -1,4 +1,4 @@
-package com.fourteen06.emseesquare.presentation
+package com.fourteen06.emseesquare.presentation.message
 
 import androidx.fragment.app.Fragment
 import com.fourteen06.emseesquare.R

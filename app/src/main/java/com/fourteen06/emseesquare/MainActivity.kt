@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.fourteen06.emseesquare.databinding.ActivityMainBinding
 import com.fourteen06.emseesquare.presentation.CommunityFragment
 import com.fourteen06.emseesquare.presentation.notice.HomeFragment
-import com.fourteen06.emseesquare.presentation.MessageFragment
+import com.fourteen06.emseesquare.presentation.message.MessageFragment
 import com.fourteen06.emseesquare.presentation.ProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 

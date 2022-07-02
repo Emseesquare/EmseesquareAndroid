@@ -5,7 +5,7 @@ data class User(
     val name: String,
     val subTitle: String,
     val profileImageUrl: String,
-    val role: UserRole,
+//    val role: UserRole,
     val instituteId: String,
     val instituteName: String
 ) {
@@ -15,11 +15,11 @@ data class User(
             NAME to this.name,
             SUBTITLE to this.subTitle,
             PROFILE_IMAGE_URL to this.profileImageUrl,
-            ROLE to when (this.role) {
-                UserRole.Admin -> UserRole.Admin
-                UserRole.Student -> UserRole.Student
-                is UserRole.Teacher -> this.role
-            },
+//            ROLE to when (this.role) {
+//                UserRole.Admin -> UserRole.Admin
+//                UserRole.Student -> UserRole.Student
+//                is UserRole.Teacher -> this.role
+//            },
             INSTITUTE_ID to instituteId,
             INSTITUTE_NAME to instituteName
         )

@@ -18,7 +18,7 @@ data class NoticeModel(
             TIME to this.time,
             CONTENT to this.content,
             PINS to this.pins,
-            ATTACHMENT_TYPE to this.attachmentType,
+            ATTACHMENT_TYPE to this.attachmentType.toString(),
             USER to user
         )
     }

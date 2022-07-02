@@ -17,9 +17,9 @@
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_community.xml" value="0.35885416666666664" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_login_with_phone_number.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_message.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_otp.xml" value="0.25" />
