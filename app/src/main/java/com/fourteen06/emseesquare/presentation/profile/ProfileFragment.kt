@@ -1,9 +1,9 @@
-package com.fourteen06.emseesquare.multistack_fragments.root.second
+package com.fourteen06.emseesquare.presentation.profile
 
 import androidx.fragment.app.Fragment
 import com.fourteen06.emseesquare.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SecondFragment : Fragment(R.layout.second_fragment) {
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
 }
