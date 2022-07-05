@@ -71,5 +71,6 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:1.0.0"
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
+    implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
 
 }
