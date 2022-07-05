@@ -1,10 +1,16 @@
 package com.fourteen06.emseesquare.presentation
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentRootBinding
 import com.fourteen06.emseesquare.utils.FragmentStackHostFragment
@@ -13,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RootFragment : Fragment(R.layout.fragment_root) {
+    private lateinit var drawerToggle: ActionBarDrawerToggle
     private val binding by viewBinding(FragmentRootBinding::bind)
 
     private lateinit var homeFragmentHost: FragmentStackHostFragment
@@ -53,6 +60,7 @@ class RootFragment : Fragment(R.layout.fragment_root) {
                 .add(R.id.containerBottomNavContent, profileFragment, PROFILE_FRAGMENT)
                 .selectFragment(selectedIndex)
                 .commit()
+
         } else {
             selectedIndex = savedInstanceState.getInt(SELECTED_INDEX, 0)
 
@@ -71,6 +79,8 @@ class RootFragment : Fragment(R.layout.fragment_root) {
         super.onViewCreated(view, savedInstanceState)
         binding.appBarMain.toolbar.apply {
             (activity as AppCompatActivity).setSupportActionBar(this)
+            (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true);
+            setupDrawerLayout()
         }
         binding.appBarMain.btmNavView.apply {
             setOnItemSelectedListener {
@@ -97,6 +107,26 @@ class RootFragment : Fragment(R.layout.fragment_root) {
                 }
             }
         }
+        setHasOptionsMenu(true)
+    }
+
+    private fun setupDrawerLayout() {
+        drawerToggle = ActionBarDrawerToggle(
+            requireActivity(),
+            binding.drawerLayout,
+            R.string.open,
+            R.string.close
+        )
+        binding.drawerLayout.setDrawerListener(drawerToggle);
+        drawerToggle.syncState()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            binding.drawerLayout.open()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -123,6 +153,7 @@ class RootFragment : Fragment(R.layout.fragment_root) {
         childFragmentManager.beginTransaction()
             .selectFragment(indexToSelect)
             .commit()
+
     }
 }
 

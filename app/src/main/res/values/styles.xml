@@ -63,7 +63,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.Emseesquare.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Emseesquare.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Theme.Emseesquare.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 

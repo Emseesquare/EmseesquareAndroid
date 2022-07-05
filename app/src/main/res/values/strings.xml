@@ -6,5 +6,7 @@
     <string name="title_home">Home</string>
     <string name="title_message">Message</string>
     <string name="title_communities">Communities</string>
-    <string name="title_profile">Profile</string>s
+    <string name="title_profile">Profile</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>s
 </resources>
