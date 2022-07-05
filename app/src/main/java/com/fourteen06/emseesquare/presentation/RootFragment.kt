@@ -2,6 +2,7 @@ package com.fourteen06.emseesquare.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.fourteen06.emseesquare.R
@@ -68,12 +69,9 @@ class RootFragment : Fragment(R.layout.fragment_root) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        tabs.forEachIndexed { index, textView ->
-//            textView.setOnClickListener {
-//                selectFragment(index)
-//            }
-//        }
+        binding.appBarMain.toolbar.apply {
+            (activity as AppCompatActivity).setSupportActionBar(this)
+        }
         binding.appBarMain.btmNavView.apply {
             setOnItemSelectedListener {
                 when (it.itemId) {

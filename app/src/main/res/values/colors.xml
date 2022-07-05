@@ -10,9 +10,10 @@
     <color name="background_white">#ffFAFAFA</color>
     <color name="black66">#A8000000</color>
     <color name="black35">#59000000</color>
+    <color name="black02">#05000000</color>
     <color name="black87">#DE000000</color>
     <color name="titleColor">#5C5C5C</color>
 
-    <color name="tab_unselected">#909090</color>
-    <color name="tab_selected">#121212</color>
+    <color name="white_">#ECECEC</color>
+
 </resources>

@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/drawable/ic_pin_outlined.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_verify_your_phone_number.xml" value="0.256" />
         <entry key="app/src/main/res/drawable/ic_welcome_emseesquare__your_college_go_through_app_.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/notice_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_multistack.xml" value="0.35885416666666664" />
@@ -27,8 +28,9 @@
         <entry key="app/src/main/res/layout/fragment_message.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_otp.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_root.xml" value="0.3101851851851852" />
         <entry key="app/src/main/res/layout/initial_fragment.xml" value="0.35885416666666664" />
-        <entry key="app/src/main/res/layout/notice_view.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/notice_view.xml" value="0.47249647390691113" />
         <entry key="app/src/main/res/layout/root_fragment.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/stack_host_fragment.xml" value="0.18333333333333332" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.3578125" />
