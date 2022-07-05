@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.fourteen06.emseesquare.AuthActivity
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentOtpBinding
 import com.fourteen06.emseesquare.utils.AlertExt.makeLongToast
@@ -43,7 +43,7 @@ class OtpVerifyFragment : Fragment(R.layout.fragment_otp) {
                 viewModel.init(
                     AuthInStates.VerifyOTP(
                         otp = otp,
-                        verificationId = otpVerifyFragmentArgs.args.verificationId
+                        verificationId = otpVerifyFragmentArgs.verificationToken
                     )
                 )
             }
@@ -60,7 +60,7 @@ class OtpVerifyFragment : Fragment(R.layout.fragment_otp) {
                 is AuthOutStates.MoveToOTP_Screen -> {}
                 AuthOutStates.Success -> {
                     this.binding.progressBar.visibility = View.GONE
-                    (requireActivity() as AuthActivity).moveUserToHomeScreen()
+                    sendUserToRootFragment()
                 }
                 AuthOutStates.Uninitialized -> {
                     this.binding.progressBar.visibility = View.GONE
@@ -123,4 +123,7 @@ class OtpVerifyFragment : Fragment(R.layout.fragment_otp) {
 
     }
 
+    private fun sendUserToRootFragment() {
+        findNavController().navigate(OtpVerifyFragmentDirections.initialToRoot())
+    }
 }

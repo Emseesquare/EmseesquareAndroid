@@ -6,18 +6,29 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.fourteen06.emseesquare.AuthActivity
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentLoginWithPhoneNumberBinding
 import com.fourteen06.emseesquare.models.AuthNavArgs
 import com.fourteen06.emseesquare.utils.AlertExt.makeLongToast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AuthFragment : Fragment(R.layout.fragment_login_with_phone_number) {
     private lateinit var binding: FragmentLoginWithPhoneNumberBinding
     private val viewModel by activityViewModels<AuthViewModel>()
+
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (firebaseAuth.currentUser != null) {
+            sendUserToRootFragment()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentLoginWithPhoneNumberBinding.bind(view)
@@ -47,7 +58,7 @@ class AuthFragment : Fragment(R.layout.fragment_login_with_phone_number) {
                 }
                 AuthOutStates.Success -> {
                     this.binding.progressBar.visibility = View.GONE
-                    (requireActivity() as AuthActivity).moveUserToHomeScreen()
+                    sendUserToRootFragment()
                 }
                 AuthOutStates.Uninitialized -> {
                     this.binding.progressBar.visibility = View.GONE
@@ -57,26 +68,27 @@ class AuthFragment : Fragment(R.layout.fragment_login_with_phone_number) {
         }
     }
 
-
     private fun moveUserToOTP_Screen(
         verificationId: String,
         token: PhoneAuthProvider.ForceResendingToken
     ) {
-        val navArgs = AuthNavArgs(
-            verificationId = verificationId,
-            token = token,
-            phoneNumber = this.binding.phoneNumberEditText.text.toString()
-        )
         findNavController().navigate(
-            AuthFragmentDirections.actionAuthFragment2ToOtpVerifyFragment(
-                navArgs
+            AuthFragmentDirections.actionAuthFragmentToOtpVerifyFragment(
+                verificationId,
+                token,
+                this.binding.phoneNumberEditText.text.toString()
             )
         )
     }
 
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(PHONE_NUMBER, binding.phoneNumberEditText.text.toString())
+    }
+
+    private fun sendUserToRootFragment() {
+        findNavController().navigate(AuthFragmentDirections.initialToRoot())
     }
 }
 

@@ -1,9 +1,9 @@
-package com.fourteen06.emseesquare.presentation
+package com.fourteen06.emseesquare.presentation.community
 
 import androidx.fragment.app.Fragment
 import com.fourteen06.emseesquare.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment(R.layout.fragment_profile) {
+class CommunityFragment : Fragment(R.layout.fragment_community) {
 }
