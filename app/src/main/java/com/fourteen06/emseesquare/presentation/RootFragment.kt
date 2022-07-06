@@ -79,8 +79,6 @@ class RootFragment : Fragment(R.layout.fragment_root) {
         super.onViewCreated(view, savedInstanceState)
         binding.appBarMain.toolbar.apply {
             (activity as AppCompatActivity).setSupportActionBar(this)
-            (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true);
-            setupDrawerLayout()
         }
         binding.appBarMain.btmNavView.apply {
             setOnItemSelectedListener {
@@ -108,25 +106,6 @@ class RootFragment : Fragment(R.layout.fragment_root) {
             }
         }
         setHasOptionsMenu(true)
-    }
-
-    private fun setupDrawerLayout() {
-        drawerToggle = ActionBarDrawerToggle(
-            requireActivity(),
-            binding.drawerLayout,
-            R.string.open,
-            R.string.close
-        )
-        binding.drawerLayout.setDrawerListener(drawerToggle);
-        drawerToggle.syncState()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            binding.drawerLayout.open()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
