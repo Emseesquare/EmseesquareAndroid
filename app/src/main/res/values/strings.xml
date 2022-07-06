@@ -8,5 +8,6 @@
     <string name="title_communities">Communities</string>
     <string name="title_profile">Profile</string>
     <string name="open">Open</string>
-    <string name="close">Close</string>s
+    <string name="close">Close</string>
+    <string name="title_add_notice">Add Notice</string>s
 </resources>
