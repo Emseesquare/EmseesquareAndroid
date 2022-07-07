@@ -8,7 +8,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentLoginWithPhoneNumberBinding
-import com.fourteen06.emseesquare.models.AuthNavArgs
 import com.fourteen06.emseesquare.utils.AlertExt.makeLongToast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider

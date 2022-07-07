@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.fourteen06.emseesquare.models.NoticeModel
-import com.fourteen06.emseesquare.repository.getPagedNotices
+import com.fourteen06.emseesquare.repository.notice.getPagedNotices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

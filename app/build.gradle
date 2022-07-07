@@ -73,4 +73,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
     implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
 
+    implementation 'com.orhanobut:logger:2.2.0'
+
 }

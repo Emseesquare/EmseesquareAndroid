@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.fourteen06.emseesquare.repository.AuthWithPhoneUseCase
+import com.fourteen06.emseesquare.repository.auth.AuthWithPhoneUseCase
 import com.fourteen06.emseesquare.repository.OtpAuthResult
 import com.fourteen06.emseesquare.repository.OtpAuthUseCase
-import com.fourteen06.emseesquare.repository.PhoneAuthResult
+import com.fourteen06.emseesquare.repository.auth.PhoneAuthResult
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.lifecycle.HiltViewModel

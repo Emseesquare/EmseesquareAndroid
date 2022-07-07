@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/edittext_curve_bg.xml" value="0.142" />
+        <entry key="app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.302" />
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.1" />
@@ -22,6 +23,7 @@
         <entry key="app/src/main/res/layout/content_main.xml" value="0.43419434194341944" />
         <entry key="app/src/main/res/layout/first_fragment_1.xml" value="0.22870370370370371" />
         <entry key="app/src/main/res/layout/first_fragment_2.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_add_notice.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_community.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_login_with_phone_number.xml" value="0.22" />
@@ -35,6 +37,7 @@
         <entry key="app/src/main/res/layout/stack_host_fragment.xml" value="0.18333333333333332" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.3578125" />
         <entry key="app/src/main/res/menu/btm_nav_menu.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/menu/generic_tick_menu.xml" value="0.33" />
         <entry key="app/src/main/res/menu/home_menu.xml" value="0.2351851851851852" />
       </map>
     </option>

@@ -67,5 +67,8 @@
 
     <style name="Theme.Emseesquare.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-
+    <style name="App.EditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/green_500</item>
+        <item name="hintTextColor">@color/green_500</item>
+    </style>
 </resources>

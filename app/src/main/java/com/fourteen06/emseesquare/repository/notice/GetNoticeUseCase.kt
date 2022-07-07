@@ -1,4 +1,4 @@
-package com.fourteen06.emseesquare.repository
+package com.fourteen06.emseesquare.repository.notice
 
 import com.fourteen06.emseesquare.models.NoticeModel
 import com.fourteen06.emseesquare.models.NoticeModel.Factory.toNotice
