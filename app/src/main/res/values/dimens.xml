@@ -3,4 +3,7 @@
     <dimen name="notice_member_name_font_size">15sp</dimen>
     <dimen name="notice_member_position_font_size">13sp</dimen>
     <dimen name="notice_member_description_font_size">13sp</dimen>
+    <dimen name="app_member_name_font_size">17sp</dimen>
+    <dimen name="app_member_info_font_size">15sp</dimen>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.fourteen06.emseesquare.di
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -8,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Qualifier
 
 
 @Module
@@ -22,4 +24,15 @@ object AppModule {
 
     @Provides
     fun provideFirebaseStorage() = Firebase.storage
+
+    @CurrentUserUID
+    @Provides
+    fun provideCurrentUserUid(
+        firebaseAuth: FirebaseAuth
+    ) = firebaseAuth.currentUser?.uid
 }
+
+@Retention(AnnotationRetention.RUNTIME)
+@Qualifier
+annotation class CurrentUserUID
+

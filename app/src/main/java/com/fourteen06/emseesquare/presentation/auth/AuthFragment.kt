@@ -21,12 +21,7 @@ class AuthFragment : Fragment(R.layout.fragment_login_with_phone_number) {
 
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (firebaseAuth.currentUser != null) {
-            sendUserToRootFragment()
-        }
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,7 +52,6 @@ class AuthFragment : Fragment(R.layout.fragment_login_with_phone_number) {
                 }
                 AuthOutStates.Success -> {
                     this.binding.progressBar.visibility = View.GONE
-                    sendUserToRootFragment()
                 }
                 AuthOutStates.Uninitialized -> {
                     this.binding.progressBar.visibility = View.GONE
@@ -88,6 +82,10 @@ class AuthFragment : Fragment(R.layout.fragment_login_with_phone_number) {
 
     private fun sendUserToRootFragment() {
         findNavController().navigate(AuthFragmentDirections.initialToRoot())
+    }
+
+    private fun sendUserToProfileSetupFragment() {
+        findNavController().navigate(AuthFragmentDirections.actionGlobalProfileSetupFragment())
     }
 }
 
