@@ -9,7 +9,5 @@ sealed class AddNoticeViewModelInStates {
         AddNoticeViewModelInStates()
 
     data class UploadNotice(val description: String) :
-        AddNoticeViewModelInStates() {
-
-    }
+        AddNoticeViewModelInStates()
 }
