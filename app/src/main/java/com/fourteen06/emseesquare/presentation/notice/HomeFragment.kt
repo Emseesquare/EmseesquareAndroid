@@ -55,12 +55,12 @@ class HomeFragment : MultistackBaseFragment(
                 }
             })
         }
-
-        lifecycleScope.launchWhenCreated {
+//
+//        lifecycleScope.launchWhenCreated {
 //            viewModel.notices.collect {
 //                noticeAdapter.submitList(it)
 //            }
-        }
+//        }
     }
 
     private fun sendUserToAddNotice() {

@@ -2,6 +2,7 @@ package com.fourteen06.emseesquare.repository.notice
 
 import com.fourteen06.emseesquare.models.NoticeModel
 import com.fourteen06.emseesquare.utils.Resource
+import com.fourteen06.emseesquare.utils.firebase_url_locator.NOTICE_COLLECTION_NAME
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
@@ -14,13 +15,13 @@ import javax.inject.Singleton
 @Singleton
 class AddNoticeUseCase @Inject constructor(
     val firebaseAuth: FirebaseAuth,
-    val firebaseFirestore: FirebaseFirestore
+    private val firebaseFirestore: FirebaseFirestore
 ) {
     private val db = firebaseFirestore
     suspend operator fun invoke(notice: NoticeModel): Flow<Resource<Unit>> = flow {
         emit(Resource.Loading())
         try {
-            val ref = db.collection("notice")
+            val ref = db.collection(NOTICE_COLLECTION_NAME)
                 .document()
 
             ref.set(notice.toHashMap())

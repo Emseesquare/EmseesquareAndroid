@@ -78,5 +78,5 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation 'com.github.Zhuinden:flow-combinetuple-kt:1.1.1'
     implementation 'hu.autsoft:krate:2.0.0'
-
+    implementation "com.gappein.sdk:gappein-sdk:1.0.0-beta3"
 }

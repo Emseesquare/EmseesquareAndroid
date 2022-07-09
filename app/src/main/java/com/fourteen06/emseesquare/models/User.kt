@@ -6,7 +6,7 @@ import com.google.firebase.ktx.Firebase
 import java.util.*
 
 data class User(
-    val uid: String = Firebase.auth.currentUser?.uid.toString(),
+    var uid: String = Firebase.auth.currentUser?.uid.toString(),
     val id: String,
     val name: String,
     val subTitle: String,

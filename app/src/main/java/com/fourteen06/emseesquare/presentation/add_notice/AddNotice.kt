@@ -67,6 +67,8 @@ class AddNotice : MultistackBaseFragment(
                     }
                     is AddNoticeViewModelOutStates.ErrorOccured -> {
                         makeShortToast(it.message)
+                        binding.attachmentProgressBar.visibility = View.INVISIBLE
+                        binding.progressBar.visibility = View.INVISIBLE
                     }
                 }
             }

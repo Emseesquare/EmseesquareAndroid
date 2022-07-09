@@ -18,29 +18,34 @@ data class NoticeModel(
             TIME to this.time,
             CONTENT to this.content,
             PINS to this.pins,
-            ATTACHMENT_TYPE to this.attachmentType.toString(),
-            USER to user
+            ATTACHMENT_URL to attachmentType.toURL(),
+            USER to user?.uid,
+            ATTACHMENT_TYPE to attachmentType.toType()
+
         )
     }
 
     companion object Factory {
-        fun QueryDocumentSnapshot.toNotice(): NoticeModel {
+        suspend fun QueryDocumentSnapshot.toNotice(getUser: suspend (userId: String) -> User): NoticeModel {
             val dataMap = this.data
+            val attachmentType = when (dataMap[ATTACHMENT_TYPE] as Int) {
+                1 -> {
+                    AttachmentType.Image(imageUrl = dataMap[ATTACHMENT_URL] as String)
+                }
+                2 -> {
+                    AttachmentType.File(fileUrl = dataMap[ATTACHMENT_URL] as String)
+                }
+                else -> {
+                    AttachmentType.None
+                }
+            }
+            val user = getUser(dataMap[USER].toString())
             return NoticeModel(
                 id = dataMap[ID] as String,
                 content = dataMap[CONTENT].toString(),
                 time = (dataMap[TIME] as Timestamp).toDate(),
-                attachmentType = when (dataMap[ATTACHMENT_TYPE]) {
-                    1L -> {
-                        AttachmentType.Image(imageUrl = dataMap[IMAGE_URL] as String)
-                    }
-                    2L -> {
-                        AttachmentType.File(fileUrl = dataMap[FILE_URL] as String)
-                    }
-                    else -> {
-                        AttachmentType.None
-                    }
-                }
+                attachmentType = attachmentType,
+                user = user
             )
         }
     }
@@ -52,3 +57,4 @@ private const val CONTENT = "content"
 private const val PINS = "pins"
 private const val ATTACHMENT_TYPE = "attachmentType"
 private const val USER = "user"
+private const val ATTACHMENT_URL = "attachment url"
