@@ -10,7 +10,7 @@ fun Uri.getMimeType(context: Context): String? {
     return when (scheme) {
         ContentResolver.SCHEME_CONTENT -> context.contentResolver.getType(this)
         ContentResolver.SCHEME_FILE -> MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-            MimeTypeMap.getFileExtensionFromUrl(toString()).toLowerCase(Locale.US)
+            MimeTypeMap.getFileExtensionFromUrl(toString()).lowercase(Locale.US)
         )
         else -> null
     }

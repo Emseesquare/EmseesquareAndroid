@@ -18,9 +18,6 @@ class OtpVerifyFragment : Fragment(R.layout.fragment_otp) {
     private lateinit var binding: FragmentOtpBinding
     private val otpVerifyFragmentArgs by navArgs<OtpVerifyFragmentArgs>()
     private val viewModel by activityViewModels<AuthViewModel>()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,13 +58,19 @@ class OtpVerifyFragment : Fragment(R.layout.fragment_otp) {
                 AuthOutStates.Loading -> {
                     this.binding.progressBar.visibility = View.VISIBLE
                 }
-                AuthOutStates.Success -> {
-                    this.binding.progressBar.visibility = View.GONE
-                }
+
                 AuthOutStates.Uninitialized -> {
                     this.binding.progressBar.visibility = View.GONE
                 }
-                else -> {}
+                is AuthOutStates.MoveToOTP_Screen -> {}
+                AuthOutStates.MoveToRootFragment -> {
+                    this.binding.progressBar.visibility = View.GONE
+                    sendUserToRootFragment()
+                }
+                AuthOutStates.MoveToUserInfoSetupFragment -> {
+                    this.binding.progressBar.visibility = View.GONE
+                    sendUserToProfileSetupFragment()
+                }
             }
         }
 

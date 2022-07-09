@@ -46,15 +46,19 @@ class ProfileSetupFragment : Fragment(R.layout.fragment_profile_setup) {
                 AuthOutStates.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
-                AuthOutStates.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    sendUserToRootFragment()
-                }
+
                 AuthOutStates.Uninitialized -> {
                     binding.progressBar.visibility = View.GONE
 
                 }
-                else -> {}
+                AuthOutStates.MoveToRootFragment -> {
+                    this.binding.progressBar.visibility = View.GONE
+                    sendUserToRootFragment()
+                }
+                AuthOutStates.MoveToUserInfoSetupFragment -> {
+                    this.binding.progressBar.visibility = View.GONE
+                }
+                is AuthOutStates.MoveToOTP_Screen -> {}
             }
         }
         setHasOptionsMenu(true)

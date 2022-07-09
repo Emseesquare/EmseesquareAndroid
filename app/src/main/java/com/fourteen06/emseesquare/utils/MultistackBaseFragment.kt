@@ -38,7 +38,7 @@ open class MultistackBaseFragment(
         (activity as AppCompatActivity).apply {
             title = getString(this@MultistackBaseFragment.title)
             if (showHomeAsUp) {
-                supportActionBar?.setDisplayHomeAsUpEnabled(true);
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 if (homeIcon != null) {
                     supportActionBar?.setHomeAsUpIndicator(homeIcon)
                 } else {
@@ -76,7 +76,7 @@ open class MultistackBaseFragment(
                 //act as backbutton
                 findNavController().popBackStack()
             }
-            return true;
+            return true
         }
 
         return super.onOptionsItemSelected(item)

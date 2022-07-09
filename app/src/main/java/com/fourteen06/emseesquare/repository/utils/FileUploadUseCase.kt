@@ -8,7 +8,6 @@ import com.fourteen06.emseesquare.utils.Resource
 import com.fourteen06.emseesquare.utils.getMimeType
 import com.google.firebase.FirebaseException
 import com.google.firebase.storage.FirebaseStorage
-import com.orhanobut.logger.Logger
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await

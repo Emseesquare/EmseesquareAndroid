@@ -27,7 +27,7 @@ private val user = User(
     uid = "1"
 )
 
-class NoticeAdapter() :
+class NoticeAdapter :
     ListAdapter<NoticeModel, NoticeAdapter.ViewHolder>(CustomDiffUtil()) {
     inner class ViewHolder(val binding: NoticeViewBinding) :
         RecyclerView.ViewHolder(binding.root) {

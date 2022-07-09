@@ -3,14 +3,11 @@ package com.fourteen06.emseesquare.presentation.profile
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import coil.load
-import coil.transform.CircleCropTransformation
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentProfileBinding
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : MultistackBaseFragment(
@@ -23,7 +20,6 @@ class ProfileFragment : MultistackBaseFragment(
     null
 ) {
     private val binding by viewBinding(FragmentProfileBinding::bind)
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

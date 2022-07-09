@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.fourteen06.emseesquare.di.CurrentUserUID
 import com.fourteen06.emseesquare.models.User
 import com.fourteen06.emseesquare.models.UserRole
 import com.fourteen06.emseesquare.repository.auth.AuthWithPhoneUseCase
@@ -13,8 +12,10 @@ import com.fourteen06.emseesquare.repository.auth.OtpAuthResult
 import com.fourteen06.emseesquare.repository.auth.OtpAuthUseCase
 import com.fourteen06.emseesquare.repository.auth.PhoneAuthResult
 import com.fourteen06.emseesquare.repository.user_setup.UserInfoSetupUsercase
+import com.fourteen06.emseesquare.repository.utils.AppSharedPreference
 import com.fourteen06.emseesquare.utils.Resource
 import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,10 +29,10 @@ class AuthViewModel @Inject constructor(
     private val authWithPhoneUseCase: AuthWithPhoneUseCase,
     private val otpAuthUseCase: OtpAuthUseCase,
     private val userInfoSetupUsercase: UserInfoSetupUsercase,
-    @CurrentUserUID
-    private val currentUserUid: String?,
+    private val appSharedPreference: AppSharedPreference,
+    private val firebaseAuth: FirebaseAuth
+) : ViewModel() {
 
-    ) : ViewModel() {
     fun init(authInStates: AuthInStates) {
         when (authInStates) {
             is AuthInStates.LoginWithPhoneNumber -> {
@@ -49,13 +50,31 @@ class AuthViewModel @Inject constructor(
                     createNewUser(authInStates)
                 }
             }
+            AuthInStates.CheckForRegisterStatus -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    eventFlow.value = AuthOutStates.Loading
+                    val result =
+                        userInfoSetupUsercase.checkForUserLoginStatus(firebaseAuth.currentUser?.uid.toString())
+                    when (result) {
+                        AppSharedPreference.CurrentStatus.LOGOUT -> {
 
+                        }
+                        AppSharedPreference.CurrentStatus.LOGGED_IN -> {
+                            eventFlow.value = AuthOutStates.MoveToUserInfoSetupFragment
+                        }
+                        AppSharedPreference.CurrentStatus.REGISTERED -> {
+                            eventFlow.value = AuthOutStates.MoveToRootFragment
+
+                        }
+                    }
+                }
+            }
         }
     }
 
     private suspend fun createNewUser(authInStates: AuthInStates.SetUserInformation) {
         val user = User(
-            uid = currentUserUid.toString(),
+            uid = firebaseAuth.currentUser?.uid.toString(),
             id = authInStates.id,
             name = authInStates.name,
             instituteId = authInStates.instituteId,
@@ -72,7 +91,7 @@ class AuthViewModel @Inject constructor(
                 }
             }
         )
-        userInfoSetupUsercase.addNewUser(currentUserUid.toString(), user).collect {
+        userInfoSetupUsercase.addNewUser(firebaseAuth.currentUser?.uid.toString(), user).collect {
             when (it) {
                 is Resource.Error -> {
                     eventFlow.value = AuthOutStates.Error(it.message)
@@ -82,7 +101,7 @@ class AuthViewModel @Inject constructor(
 
                 }
                 is Resource.Success -> {
-                    eventFlow.value = AuthOutStates.Success
+                    eventFlow.value = AuthOutStates.MoveToRootFragment
                 }
             }
         }
@@ -102,7 +121,7 @@ class AuthViewModel @Inject constructor(
                         AuthOutStates.MoveToOTP_Screen(result.verificationId, result.token)
                 }
                 is PhoneAuthResult.VerificationCompleted -> {
-                    eventFlow.value = AuthOutStates.Success
+                    this.init(AuthInStates.CheckForRegisterStatus)
                 }
             }
         } catch (e: FirebaseException) {
@@ -117,7 +136,7 @@ class AuthViewModel @Inject constructor(
                 eventFlow.value = AuthOutStates.Error(result.exception.message.toString())
             }
             is OtpAuthResult.Success -> {
-                eventFlow.value = AuthOutStates.Success
+                init(AuthInStates.CheckForRegisterStatus)
             }
             OtpAuthResult.UnknownError -> {
                 eventFlow.value = AuthOutStates.Error("Unknown Exception")
@@ -135,7 +154,10 @@ sealed class AuthOutStates {
         val token: PhoneAuthProvider.ForceResendingToken
     ) : AuthOutStates()
 
-    object Success : AuthOutStates()
+    object MoveToUserInfoSetupFragment : AuthOutStates()
+
+    object MoveToRootFragment : AuthOutStates()
+
     data class Error(val message: String) : AuthOutStates()
 }
 
@@ -155,4 +177,6 @@ sealed class AuthInStates {
         val subtitle: String,
         val role: String,
     ) : AuthInStates()
+
+    object CheckForRegisterStatus : AuthInStates()
 }
