@@ -6,7 +6,7 @@
 
     <Button
         android:id="@+id/checkOtpButton"
-        style="@style/Auth.Button"
+        style="@style/App.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"

@@ -22,9 +22,9 @@ private val user = User(
     name = "Shashank",
     subTitle = "Teacher",
     profileImageUrl = "",
-//    role = UserRole.Student,
-    instituteName = "First",
-    instituteId = "1"
+    role = UserRole.Student,
+    instituteId = "1",
+    uid = "1"
 )
 
 class NoticeAdapter() :
