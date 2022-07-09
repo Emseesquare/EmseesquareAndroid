@@ -31,6 +31,20 @@ class AppSharedPreference @Inject constructor(
         setUserStatus(CurrentStatus.REGISTERED)
     }
 
+    suspend fun getUser(): User {
+        return User(
+            id = this.id.toString(),
+            name = name.toString(),
+            profileImageUrl = profilePhoto.toString(),
+            role = when (role) {
+                0 -> UserRole.Student
+                1 -> UserRole.Teacher
+                else -> UserRole.Admin
+            },
+            instituteId = instituteId.toString(),
+            subTitle = subTitle.toString(),
+        )
+    }
 
     fun getUserStatus(): CurrentStatus {
         return when (currentUserStatus) {
