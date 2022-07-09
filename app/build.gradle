@@ -8,6 +8,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id("androidx.navigation.safeargs")
+    id "com.google.protobuf" version "0.8.17"
 }
 
 android {
@@ -72,5 +73,10 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
     implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
+
+    implementation 'com.orhanobut:logger:2.2.0'
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation 'com.github.Zhuinden:flow-combinetuple-kt:1.1.1'
+    implementation 'hu.autsoft:krate:2.0.0'
 
 }

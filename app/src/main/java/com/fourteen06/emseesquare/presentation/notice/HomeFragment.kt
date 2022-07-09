@@ -1,26 +1,28 @@
 package com.fourteen06.emseesquare.presentation.notice
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentHomeBinding
 import com.fourteen06.emseesquare.repository.notice.AddNoticeUseCase
-import com.fourteen06.emseesquare.utils.AlertExt.makeLongToast
+import com.fourteen06.emseesquare.utils.MultistackBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : MultistackBaseFragment(
+    R.layout.fragment_home,
+    R.string.title_home,
+    true,
+    true,
+    null,
+    true,
+    R.menu.home_menu
+) {
     lateinit var noticeAdapter: NoticeAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var binding: FragmentHomeBinding
@@ -55,30 +57,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         lifecycleScope.launchWhenCreated {
-            viewModel.notices.collect {
-                noticeAdapter.submitList(it)
-            }
+//            viewModel.notices.collect {
+//                noticeAdapter.submitList(it)
+//            }
         }
-        (activity as AppCompatActivity).title = getString(R.string.title_home)
-        setHasOptionsMenu(true)
     }
 
     private fun sendUserToAddNotice() {
         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddNotice())
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.home_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.home_menu_option_pin -> {
-                makeLongToast("HOME PINNED")
-                return true
-            }
-
-        }
-        return super.onOptionsItemSelected(item)
+    private fun setupDrawerLayout() {
+//        drawerToggle = ActionBarDrawerToggle(
+//            requireActivity(),
+//            binding.drawerLayout,
+//            R.string.open,
+//            R.string.close
+//        )
+//        binding.drawerLayout.setDrawerListener(drawerToggle);
+//        drawerToggle.syncState()
+//        if (drawerToggle.onOptionsItemSelected(item)) {
+//            binding.drawerLayout.open()
+//            return true
+//        }
     }
 }

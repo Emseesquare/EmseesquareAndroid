@@ -8,7 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentLoginWithPhoneNumberBinding
-import com.fourteen06.emseesquare.models.AuthNavArgs
+import com.fourteen06.emseesquare.repository.utils.AppSharedPreference
 import com.fourteen06.emseesquare.utils.AlertExt.makeLongToast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
@@ -22,10 +22,15 @@ class AuthFragment : Fragment(R.layout.fragment_login_with_phone_number) {
 
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
+
+    @Inject
+    lateinit var sharedPref: AppSharedPreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (firebaseAuth.currentUser != null) {
+        if (sharedPref.getUserStatus() == AppSharedPreference.CurrentStatus.REGISTERED) {
             sendUserToRootFragment()
+        } else if (sharedPref.getUserStatus() == AppSharedPreference.CurrentStatus.LOGGED_IN) {
+            sendUserToProfileSetupFragment()
         }
     }
 
@@ -56,14 +61,20 @@ class AuthFragment : Fragment(R.layout.fragment_login_with_phone_number) {
                     this.binding.progressBar.visibility = View.GONE
                     moveUserToOTP_Screen(it.verificationId, it.token)
                 }
-                AuthOutStates.Success -> {
-                    this.binding.progressBar.visibility = View.GONE
-                    sendUserToRootFragment()
-                }
+
                 AuthOutStates.Uninitialized -> {
                     this.binding.progressBar.visibility = View.GONE
 
                 }
+                AuthOutStates.MoveToRootFragment -> {
+                    this.binding.progressBar.visibility = View.GONE
+                    sendUserToRootFragment()
+                }
+                AuthOutStates.MoveToUserInfoSetupFragment -> {
+                    this.binding.progressBar.visibility = View.GONE
+                    sendUserToProfileSetupFragment()
+                }
+
             }
         }
     }
@@ -89,6 +100,10 @@ class AuthFragment : Fragment(R.layout.fragment_login_with_phone_number) {
 
     private fun sendUserToRootFragment() {
         findNavController().navigate(AuthFragmentDirections.initialToRoot())
+    }
+
+    private fun sendUserToProfileSetupFragment() {
+        findNavController().navigate(AuthFragmentDirections.actionGlobalProfileSetupFragment())
     }
 }
 

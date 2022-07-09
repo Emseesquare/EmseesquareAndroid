@@ -1,4 +1,4 @@
-package com.fourteen06.emseesquare.repository
+package com.fourteen06.emseesquare.repository.auth
 
 import android.app.Activity
 import com.google.firebase.FirebaseException

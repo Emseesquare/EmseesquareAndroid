@@ -25,7 +25,7 @@
         <item name="android:textColor">@color/green_500</item>
     </style>
 
-    <style name="Auth.Button" parent="TextAppearance.MaterialComponents.Button">
+    <style name="App.Button" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:backgroundTint">@color/green_500</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textAllCaps">false</item>
@@ -67,5 +67,18 @@
 
     <style name="Theme.Emseesquare.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-
+    <style name="App.EditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/green_500</item>
+        <item name="hintTextColor">@color/green_500</item>
+    </style>
+    <style name="App.User.Username" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">@dimen/app_member_name_font_size</item>
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="App.User.Info" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">@dimen/app_member_info_font_size</item>
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/black35</item>
+    </style>
 </resources>

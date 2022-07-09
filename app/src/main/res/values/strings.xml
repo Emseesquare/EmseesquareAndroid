@@ -8,5 +8,23 @@
     <string name="title_communities">Communities</string>
     <string name="title_profile">Profile</string>
     <string name="open">Open</string>
-    <string name="close">Close</string>s
+    <string name="close">Close</string>
+    <string name="title_add_notice">Add Notice</string>
+    <string name="uploadFile">Upload Image/File</string>
+    <string name="description">Description</string>
+    <string name="check">Check</string>
+    <string name="no_file_selected">No File Selected</string>
+    <string name="try_again">Please try again</string>
+    <string name="invalid_file_type">Invalid File Type: We currently only support pdf and Images.</string>
+    <string name="name">Name</string>
+    <string name="subtitle">Subtitle</string>
+    <string name="id">ID</string>
+    <string name="instituteId">Institute ID</string>
+    <string name="role">Role</string>
+
+    <string-array name="roles">
+        <item>Student</item>
+        <item>Teacher</item>
+        <item>Admin</item>
+    </string-array>
 </resources>

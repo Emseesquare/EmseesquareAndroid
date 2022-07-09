@@ -12,7 +12,7 @@ class GenericTextWatcher(view: View, private val editText: Array<EditText>) :
     private val view: View
     override fun afterTextChanged(editable: Editable) {
         val text = editable.toString()
-        when (view.getId()) {
+        when (view.id) {
             R.id.otp_edit_box1 -> if (text.length == 1) editText[1].requestFocus()
             R.id.otp_edit_box2 -> if (text.length == 1) editText[2].requestFocus() else if (text.length == 0) editText[0].requestFocus()
             R.id.otp_edit_box3 -> if (text.length == 1) editText[3].requestFocus() else if (text.length == 0) editText[1].requestFocus()

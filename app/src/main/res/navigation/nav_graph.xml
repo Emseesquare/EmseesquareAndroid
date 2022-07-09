@@ -40,4 +40,13 @@
             android:name="phoneNumber"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/profileSetupFragment"
+        android:name="com.fourteen06.emseesquare.presentation.auth.ProfileSetupFragment"
+        android:label="ProfileSetupFragment" />
+    <action
+        android:id="@+id/action_global_profileSetupFragment"
+        app:destination="@id/profileSetupFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
 </navigation>

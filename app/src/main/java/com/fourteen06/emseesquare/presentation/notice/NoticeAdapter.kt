@@ -22,12 +22,12 @@ private val user = User(
     name = "Shashank",
     subTitle = "Teacher",
     profileImageUrl = "",
-//    role = UserRole.Student,
-    instituteName = "First",
-    instituteId = "1"
+    role = UserRole.Student,
+    instituteId = "1",
+    uid = "1"
 )
 
-class NoticeAdapter() :
+class NoticeAdapter :
     ListAdapter<NoticeModel, NoticeAdapter.ViewHolder>(CustomDiffUtil()) {
     inner class ViewHolder(val binding: NoticeViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
