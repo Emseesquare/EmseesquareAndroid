@@ -1,10 +1,12 @@
 package com.fourteen06.emseesquare.presentation.auth
 
 import android.app.Activity
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.fourteen06.emseesquare.models.AttachmentType
 import com.fourteen06.emseesquare.models.User
 import com.fourteen06.emseesquare.models.UserRole
 import com.fourteen06.emseesquare.repository.auth.AuthWithPhoneUseCase
@@ -13,7 +15,9 @@ import com.fourteen06.emseesquare.repository.auth.OtpAuthUseCase
 import com.fourteen06.emseesquare.repository.auth.PhoneAuthResult
 import com.fourteen06.emseesquare.repository.user_setup.UserInfoSetupUsercase
 import com.fourteen06.emseesquare.repository.utils.AppSharedPreference
+import com.fourteen06.emseesquare.repository.utils.FileUploadUseCase
 import com.fourteen06.emseesquare.utils.Resource
+import com.fourteen06.emseesquare.utils.firebase_routes.StorageRoutes.getProfilePhotoStorageUrl
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
@@ -31,9 +35,10 @@ class AuthViewModel @Inject constructor(
     private val authWithPhoneUseCase: AuthWithPhoneUseCase,
     private val otpAuthUseCase: OtpAuthUseCase,
     private val userInfoSetupUsercase: UserInfoSetupUsercase,
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val fileUploadUseCase: FileUploadUseCase,
 ) : ViewModel() {
-
+    private lateinit var profilePhotoUrl: String
     fun init(authInStates: AuthInStates) {
         when (authInStates) {
             is AuthInStates.LoginWithPhoneNumber -> {
@@ -70,6 +75,30 @@ class AuthViewModel @Inject constructor(
                     }
                 }
             }
+            is AuthInStates.SetUserProfileProfilePhoto -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    fileUploadUseCase(
+                        authInStates.file,
+                        getProfilePhotoStorageUrl(firebaseAuth.currentUser?.uid),
+                        FileUploadUseCase.Companion.ExclusiveFile.IMAGE_ONLY
+                    ).collect {
+                        when (it) {
+                            is Resource.Error -> {
+                                eventFlow.value = AuthOutStates.Error(it.message)
+                            }
+                            is Resource.Loading -> {
+                                eventFlow.value = AuthOutStates.Loading
+                            }
+                            is Resource.Success -> {
+                                profilePhotoUrl = (it.data as AttachmentType.Image).imageUrl
+                                eventFlow.value =
+                                    AuthOutStates.SetProfileImage(it.data.imageUrl)
+
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -80,7 +109,9 @@ class AuthViewModel @Inject constructor(
             name = authInStates.name,
             instituteId = authInStates.instituteId,
             subTitle = authInStates.subtitle,
-            profileImageUrl = "",
+            profileImageUrl = if (this::profilePhotoUrl.isInitialized) {
+                profilePhotoUrl
+            } else "",
             role = when (authInStates.role.lowercase(Locale.getDefault())) {
                 "student" -> UserRole.Student
                 "teacher" -> UserRole.Teacher
@@ -160,6 +191,7 @@ sealed class AuthOutStates {
     object MoveToRootFragment : AuthOutStates()
 
     data class Error(val message: String) : AuthOutStates()
+    data class SetProfileImage(val imageUrl: String) : AuthOutStates()
 }
 
 sealed class AuthInStates {
@@ -180,4 +212,5 @@ sealed class AuthInStates {
     ) : AuthInStates()
 
     object CheckForRegisterStatus : AuthInStates()
+    data class SetUserProfileProfilePhoto(val file: Uri) : AuthInStates()
 }

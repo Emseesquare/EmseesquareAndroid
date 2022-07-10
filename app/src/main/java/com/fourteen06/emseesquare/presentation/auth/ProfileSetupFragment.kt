@@ -6,10 +6,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentProfileSetupBinding
 import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
@@ -59,7 +61,21 @@ class ProfileSetupFragment : Fragment(R.layout.fragment_profile_setup) {
                     this.binding.progressBar.visibility = View.GONE
                 }
                 is AuthOutStates.MoveToOTP_Screen -> {}
+                is AuthOutStates.SetProfileImage -> {
+                    binding.profileImageView.load(it.imageUrl)
+                    this.binding.progressBar.visibility = View.GONE
+                }
             }
+        }
+        val chooserLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+            if (it == null) {
+                makeShortToast(getString(R.string.no_file_selected))
+            } else {
+                viewModel.init(AuthInStates.SetUserProfileProfilePhoto(it))
+            }
+        }
+        binding.profileImageView.setOnClickListener {
+            chooserLauncher.launch("*/*")
         }
         setHasOptionsMenu(true)
     }

@@ -5,4 +5,8 @@ object StorageRoutes {
     const val NOTICE_COLLECTION_STORAGE = "notices"
     const val MESSAGE_COLLECTION_STORAGE = "messages"
     const val COMMUNITY_COLLECTION_STORAGE = "communities"
+
+    fun getProfilePhotoStorageUrl(uid: String?) =
+        "$PROFILE_COLLECTION_STORAGE/${uid.toString()}"
+
 }

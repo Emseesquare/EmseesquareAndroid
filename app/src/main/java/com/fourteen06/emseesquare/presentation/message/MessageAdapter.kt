@@ -14,9 +14,9 @@ class MessageAdapter(private val onClick: (MessageRoom) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(messageRoom: MessageRoom) {
             binding.apply {
-                userNameTextView.text = messageRoom.participant.filter {
-                    it != "akjsdfhasdkjfhasd"
-                }[0]
+//                userNameTextView.text = messageRoom.participant.filter {
+//                    it != "akjsdfhasdkjfhasd"
+//                }[0]
                 subtitleTextView.text = messageRoom.lastMessage
                 root.setOnClickListener {
                     onClick(messageRoom)
@@ -31,7 +31,7 @@ class MessageAdapter(private val onClick: (MessageRoom) -> Unit) :
             oldItem: MessageRoom,
             newItem: MessageRoom
         ): Boolean {
-            return oldItem.uid == newItem.uid
+            return oldItem.messageRoomId == newItem.messageRoomId
         }
 
         override fun areContentsTheSame(
