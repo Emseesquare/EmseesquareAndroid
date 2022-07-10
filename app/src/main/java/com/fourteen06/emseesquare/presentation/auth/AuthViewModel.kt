@@ -17,6 +17,8 @@ import com.fourteen06.emseesquare.utils.Resource
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +31,6 @@ class AuthViewModel @Inject constructor(
     private val authWithPhoneUseCase: AuthWithPhoneUseCase,
     private val otpAuthUseCase: OtpAuthUseCase,
     private val userInfoSetupUsercase: UserInfoSetupUsercase,
-    private val appSharedPreference: AppSharedPreference,
     private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
@@ -54,7 +55,7 @@ class AuthViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.IO) {
                     eventFlow.value = AuthOutStates.Loading
                     val result =
-                        userInfoSetupUsercase.checkForUserLoginStatus(firebaseAuth.currentUser?.uid.toString())
+                        userInfoSetupUsercase.checkForUserLoginStatus(Firebase.auth.currentUser?.uid.toString())
                     when (result) {
                         AppSharedPreference.CurrentStatus.LOGOUT -> {
 
@@ -91,7 +92,7 @@ class AuthViewModel @Inject constructor(
                 }
             }
         )
-        userInfoSetupUsercase.addNewUser(firebaseAuth.currentUser?.uid.toString(), user).collect {
+        userInfoSetupUsercase.addNewUser(Firebase.auth.currentUser?.uid.toString(), user).collect {
             when (it) {
                 is Resource.Error -> {
                     eventFlow.value = AuthOutStates.Error(it.message)

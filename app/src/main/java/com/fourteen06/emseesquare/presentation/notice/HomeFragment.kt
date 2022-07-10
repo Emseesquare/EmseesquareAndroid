@@ -3,7 +3,6 @@ package com.fourteen06.emseesquare.presentation.notice
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fourteen06.emseesquare.R
@@ -17,6 +16,7 @@ import javax.inject.Inject
 class HomeFragment : MultistackBaseFragment(
     R.layout.fragment_home,
     R.string.title_home,
+    null,
     true,
     true,
     null,
@@ -55,30 +55,28 @@ class HomeFragment : MultistackBaseFragment(
                 }
             })
         }
-//
-//        lifecycleScope.launchWhenCreated {
-//            viewModel.notices.collect {
-//                noticeAdapter.submitList(it)
-//            }
-//        }
+
+        viewModel.notices.observe(viewLifecycleOwner){
+                noticeAdapter.submitList(it)
+        }
     }
 
     private fun sendUserToAddNotice() {
         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddNotice())
     }
 
-    private fun setupDrawerLayout() {
-//        drawerToggle = ActionBarDrawerToggle(
-//            requireActivity(),
-//            binding.drawerLayout,
-//            R.string.open,
-//            R.string.close
-//        )
-//        binding.drawerLayout.setDrawerListener(drawerToggle);
-//        drawerToggle.syncState()
-//        if (drawerToggle.onOptionsItemSelected(item)) {
-//            binding.drawerLayout.open()
-//            return true
-//        }
-    }
+//    private fun setupDrawerLayout() {
+////        drawerToggle = ActionBarDrawerToggle(
+////            requireActivity(),
+////            binding.drawerLayout,
+////            R.string.open,
+////            R.string.close
+////        )
+////        binding.drawerLayout.setDrawerListener(drawerToggle);
+////        drawerToggle.syncState()
+////        if (drawerToggle.onOptionsItemSelected(item)) {
+////            binding.drawerLayout.open()
+////            return true
+////        }
+//    }
 }

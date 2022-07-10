@@ -8,7 +8,7 @@ import com.fourteen06.emseesquare.repository.notice.AddNoticeUseCase
 import com.fourteen06.emseesquare.repository.utils.AppSharedPreference
 import com.fourteen06.emseesquare.repository.utils.FileUploadUseCase
 import com.fourteen06.emseesquare.utils.Resource
-import com.fourteen06.emseesquare.utils.firebase_url_locator.FirebaseStorageUrlLocator.getNoticeUrlPrefix
+import com.fourteen06.emseesquare.utils.firebase_routes.StorageRoutes.NOTICE_COLLECTION_STORAGE
 import com.google.firebase.auth.FirebaseAuth
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -90,7 +90,7 @@ class AddNoticeViewModel @Inject constructor(
         Logger.d(noticeUid)
         fileUploadUseCase(
             viewModelInStates.uri,
-            getNoticeUrlPrefix(this.noticeUid)
+            "$NOTICE_COLLECTION_STORAGE/$noticeUid"
         ).collect {
             when (it) {
                 is Resource.Error -> {

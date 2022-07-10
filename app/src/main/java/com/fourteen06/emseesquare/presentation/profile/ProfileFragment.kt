@@ -17,6 +17,7 @@ import javax.inject.Inject
 class ProfileFragment : MultistackBaseFragment(
     R.layout.fragment_profile,
     R.string.title_profile,
+    null,
     true,
     true,
     null,

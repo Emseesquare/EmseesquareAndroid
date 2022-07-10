@@ -1,8 +1,6 @@
 package com.fourteen06.emseesquare.presentation.notice
 
-import android.text.Spannable
 import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,22 +8,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.NoticeViewBinding
 import com.fourteen06.emseesquare.models.AttachmentType
 import com.fourteen06.emseesquare.models.NoticeModel
-import com.fourteen06.emseesquare.models.User
-import com.fourteen06.emseesquare.models.UserRole
 
-private val user = User(
-    id = "1",
-    name = "Shashank",
-    subTitle = "Teacher",
-    profileImageUrl = "",
-    role = UserRole.Student,
-    instituteId = "1",
-    uid = "1"
-)
 
 class NoticeAdapter :
     ListAdapter<NoticeModel, NoticeAdapter.ViewHolder>(CustomDiffUtil()) {
@@ -33,16 +19,9 @@ class NoticeAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(notice: NoticeModel) {
             val spannable =
-                SpannableString(user.subTitle + "(Posted on:" + notice.time + ")")
-            spannable.setSpan(
-                ForegroundColorSpan(itemView.context.getColor(R.color.black35)),
-                user.subTitle.length, // start
-                spannable.length, // end
-                Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-            )
-
+                SpannableString(notice.user?.subTitle.toString() + "(Posted on:" + notice.time + ")")
             binding.apply {
-                userName.text = user.name
+                userName.text = notice.user?.name.toString()
                 userSubtitle.text = spannable
                 noticeDescription.text = notice.content
                 when (notice.attachmentType) {

@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddNotice : MultistackBaseFragment(
     R.layout.fragment_add_notice,
     R.string.title_add_notice,
+    null,
     false,
     true,
     null,

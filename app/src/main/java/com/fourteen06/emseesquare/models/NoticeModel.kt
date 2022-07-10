@@ -28,11 +28,11 @@ data class NoticeModel(
     companion object Factory {
         suspend fun QueryDocumentSnapshot.toNotice(getUser: suspend (userId: String) -> User): NoticeModel {
             val dataMap = this.data
-            val attachmentType = when (dataMap[ATTACHMENT_TYPE] as Int) {
-                1 -> {
+            val attachmentType = when (dataMap[ATTACHMENT_TYPE]) {
+                1L -> {
                     AttachmentType.Image(imageUrl = dataMap[ATTACHMENT_URL] as String)
                 }
-                2 -> {
+                2L -> {
                     AttachmentType.File(fileUrl = dataMap[ATTACHMENT_URL] as String)
                 }
                 else -> {
@@ -48,13 +48,12 @@ data class NoticeModel(
                 user = user
             )
         }
+        const val ID = "id"
+        const val TIME = "time"
+        const val CONTENT = "content"
+        const val PINS = "pins"
+        const val ATTACHMENT_TYPE = "attachmentType"
+        const val USER = "user"
+        const val ATTACHMENT_URL = "attachment url"
     }
 }
-
-private const val ID = "id"
-private const val TIME = "time"
-private const val CONTENT = "content"
-private const val PINS = "pins"
-private const val ATTACHMENT_TYPE = "attachmentType"
-private const val USER = "user"
-private const val ATTACHMENT_URL = "attachment url"

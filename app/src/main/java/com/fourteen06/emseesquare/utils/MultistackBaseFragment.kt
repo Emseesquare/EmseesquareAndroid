@@ -19,13 +19,15 @@ import com.fourteen06.emseesquare.R
 
 open class MultistackBaseFragment(
     @LayoutRes val contentLayoutId: Int,
-    @StringRes val title: Int,
+    @StringRes val titleRes: Int?,
+    val title: String?,
     private val isTopLevelFragment: Boolean,
     private val showHomeAsUp: Boolean,
     @DrawableRes private val homeIcon: Int?,
     private val hasMenu: Boolean,
     @MenuRes private val menuRes: Int?
 ) : Fragment(contentLayoutId) {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (hasMenu && menuRes == null) {
             throw IllegalStateException(MENU_ILLEGAL_STATE_MESSAGE)
@@ -36,7 +38,13 @@ open class MultistackBaseFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).apply {
-            title = getString(this@MultistackBaseFragment.title)
+            if (this@MultistackBaseFragment.titleRes != null) {
+
+                title = getString(this@MultistackBaseFragment.titleRes)
+            }
+            if (this@MultistackBaseFragment.title != null) {
+                title = this@MultistackBaseFragment.title
+            }
             if (showHomeAsUp) {
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 if (homeIcon != null) {

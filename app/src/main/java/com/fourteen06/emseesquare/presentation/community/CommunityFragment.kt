@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CommunityFragment : MultistackBaseFragment(
     R.layout.fragment_community,
     R.string.title_communities,
+    null,
     true,
     true,
     null,

@@ -4,7 +4,7 @@ import com.fourteen06.emseesquare.models.User
 import com.fourteen06.emseesquare.models.User.Factory.toUser
 import com.fourteen06.emseesquare.repository.utils.AppSharedPreference
 import com.fourteen06.emseesquare.utils.Resource
-import com.fourteen06.emseesquare.utils.firebase_url_locator.FirebaseFirestoreRoutes.getUserRoute
+import com.fourteen06.emseesquare.utils.firebase_routes.FirestoreRoute.PROFILE_COLLECTION
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +26,7 @@ class UserInfoSetupUsercase @Inject constructor(
             }
             AppSharedPreference.CurrentStatus.LOGGED_IN -> {
                 val currentUserPossibleDocument =
-                    firestore.collection(getUserRoute).document(uid).get().await()
+                    firestore.collection(PROFILE_COLLECTION).document(uid).get().await()
                 if (currentUserPossibleDocument.exists()) {
                     appSharedPreference.setUserStatus(AppSharedPreference.CurrentStatus.REGISTERED)
                     appSharedPreference.setUser(currentUserPossibleDocument.toUser())
@@ -46,14 +46,26 @@ class UserInfoSetupUsercase @Inject constructor(
         emit(Resource.Loading())
         try {
             val userRouteToDocument =
-                firestore.collection(getUserRoute).document(uid)
+                firestore.collection(PROFILE_COLLECTION).document(uid)
             userRouteToDocument.set(user.toHashMap()).await()
             val userSnapshot = userRouteToDocument.get().await()
             val user = (userSnapshot).toUser()
+            appSharedPreference.setUserStatus(AppSharedPreference.CurrentStatus.REGISTERED)
+            appSharedPreference.setUser(user)
             emit(Resource.Success(user))
         } catch (e: FirebaseFirestoreException) {
             emit(Resource.Error(e.message.toString()))
 
+        }
+    }
+
+    suspend fun getUserById(uid: String): Resource<User> {
+        return try {
+            val userSnapshot =
+                firestore.collection(PROFILE_COLLECTION).document(uid).get().await()
+            Resource.Success(userSnapshot.toUser())
+        } catch (e: FirebaseFirestoreException) {
+            Resource.Error(e.message.toString())
         }
     }
 }
