@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentMessageBinding
-import com.fourteen06.emseesquare.utils.AlertExt.makeLongToast
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,32 +27,6 @@ class MessageFragment : MultistackBaseFragment(
         findNavController().navigate(MessageFragmentDirections.actionMessageFragmentToChatFragment())
     }
     private val viewModel by viewModels<MessageViewModel>()
-//    val listOfMessage = listOf(
-//        MessageRoom(
-//            participant = listOf("aksjdfhadgasdg", "akjsdfhasdkjfhasd"),
-//            lastMessage = "Helloworld",
-//            lastMessageTimestamp = Date(System.currentTimeMillis()),
-//            roomOnline = true
-//        ),
-//        MessageRoom(
-//            participant = listOf("aksjdfhadgasdg", "akjsdfhasdkjfhasd"),
-//            lastMessage = "Helloworld",
-//            lastMessageTimestamp = Date(System.currentTimeMillis()),
-//            roomOnline = true
-//        ),
-//        MessageRoom(
-//            participant = listOf("aksjdfhadgasdg", "akjsdfhasdkjfhasd"),
-//            lastMessage = "Helloworld",
-//            lastMessageTimestamp = Date(System.currentTimeMillis()),
-//            roomOnline = true
-//        ),
-//        MessageRoom(
-//            participant = listOf("aksjdfhadgasdg", "akjsdfhasdkjfhasd"),
-//            lastMessage = "Helloworld",
-//            lastMessageTimestamp = Date(System.currentTimeMillis()),
-//            roomOnline = true
-//        ),
-//    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,7 +39,7 @@ class MessageFragment : MultistackBaseFragment(
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_search) {
-          viewModel
+//            viewModel.init(MessageViewmodelInStates.MakeNewChatRoom("QrtKLwQ97ub376KrIqrw8caMQvo1"))
         }
         return super.onOptionsItemSelected(item)
 

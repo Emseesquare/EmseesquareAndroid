@@ -16,7 +16,7 @@ data class MessageRoom(
             MESSAGE_ROOM_ID to messageRoomId,
             PARTICIPANTS to mutableListOf<String>().also {
                 for (i in participant) {
-                    it.add(i.id)
+                    it.add(i.uid)
                 }
             },
             LAST_MESSAGE to lastMessage,

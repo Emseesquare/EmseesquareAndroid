@@ -2,6 +2,7 @@ package com.fourteen06.emseesquare.repository.message
 
 import com.fourteen06.emseesquare.models.MessageRoom
 import com.fourteen06.emseesquare.models.User
+import com.fourteen06.emseesquare.repository.user_setup.UserInfoSetupUsercase
 import com.fourteen06.emseesquare.repository.utils.AppSharedPreference
 import com.fourteen06.emseesquare.utils.Resource
 import com.fourteen06.emseesquare.utils.firebase_routes.FirestoreRoute.MESSAGE_COLLECTION
@@ -17,11 +18,17 @@ import javax.inject.Singleton
 @Singleton
 class AddNewMessageRoomUseCase @Inject constructor(
     val firestore: FirebaseFirestore,
-    val appSharedPreference: AppSharedPreference
+    val appSharedPreference: AppSharedPreference,
+    private val userUseCase: UserInfoSetupUsercase
 ) {
-    suspend operator fun invoke(user: User): Flow<Resource<MessageRoom>> = flow {
+    suspend operator fun invoke(userId: String): Flow<Resource<MessageRoom>> = flow {
         emit(Resource.Loading())
         try {
+            val user = when (val response = userUseCase.getUserById(userId)) {
+                is Resource.Error -> throw IllegalStateException(response.message)
+                is Resource.Loading -> throw IllegalStateException("Unknown Error")
+                is Resource.Success -> response.data
+            }
             val messageRoomId = UUID.randomUUID().toString()
             val messageRoom = MessageRoom(
                 messageRoomId = messageRoomId,

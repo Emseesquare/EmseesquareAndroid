@@ -26,6 +26,7 @@ data class User(
                 UserRole.Teacher -> UserRole.Teacher
             },
             INSTITUTE_ID to instituteId,
+            UID to uid
         )
     }
 
