@@ -24,8 +24,8 @@ data class MessageModel(
             val dataMap = this.data
             return MessageModel(
                 messageUid = dataMap[MESSAGE_UID].toString(),
-                senderId = dataMap[MESSAGE_UID].toString(),
-                message = dataMap[MESSAGE_UID].toString(),
+                senderId = dataMap[SENDER_ID].toString(),
+                message = dataMap[MESSAGE].toString(),
                 time = (dataMap[TIME] as Timestamp).toDate(),
             )
 

@@ -6,11 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import coil.load
 import com.fourteen06.emseesquare.databinding.MessageLayout1Binding
 import com.fourteen06.emseesquare.databinding.MessageLayout2Binding
 import com.fourteen06.emseesquare.models.MessageModel
+import com.fourteen06.emseesquare.models.User
+import com.fourteen06.emseesquare.utils.UnixToHuman
 
-class ChatAdapter(private val uid: String) :
+class ChatAdapter(private val uid: String, private val userMap: Map<String, User>) :
     ListAdapter<MessageModel, ChatAdapter.AbstractViewHolder>(ChatAdapter.CustomDiffUtil) {
     abstract inner class AbstractViewHolder(val binding: ViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -21,7 +24,8 @@ class ChatAdapter(private val uid: String) :
         override fun bind(model: MessageModel) {
             (binding as MessageLayout1Binding).apply {
                 chatMessage.setText(model.message)
-                subtitleTextView.setText(model.senderId)
+                subtitleTextView.setText(UnixToHuman.getTimeAgo(model.time.time))
+                userAvatarImageView.load(userMap[model.senderId]?.profileImageUrl)
             }
         }
 
@@ -31,7 +35,9 @@ class ChatAdapter(private val uid: String) :
         override fun bind(model: MessageModel) {
             (binding as MessageLayout2Binding).apply {
                 chatMessage.setText(model.message)
-                subtitleTextView.setText(model.senderId)
+                subtitleTextView.setText(UnixToHuman.getTimeAgo(model.time.time))
+                userAvatarImageView.load(userMap[model.senderId]?.profileImageUrl)
+
             }
         }
 
@@ -76,7 +82,7 @@ class ChatAdapter(private val uid: String) :
 
     override fun getItemViewType(position: Int): Int {
         val currentItem = getItem(position)
-        return when (currentItem.senderId == uid) {
+        return when (currentItem.senderId != uid) {
             true -> 2
             false -> 1
         }

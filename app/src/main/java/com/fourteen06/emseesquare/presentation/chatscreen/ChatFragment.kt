@@ -10,64 +10,23 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fourteen06.emseesquare.R
-import com.fourteen06.emseesquare.models.MessageModel
+import com.fourteen06.emseesquare.models.User
+import com.fourteen06.emseesquare.utils.AlertExt.makeLongToast
+import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
+import com.fourteen06.emseesquare.utils.Resource
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class ChatFragment : Fragment(
     R.layout.fragment_chat,
 ) {
-
-
-    val list = listOf(
-        MessageModel(
-            messageUid = "1",
-            message = "This is a Message",
-            senderId = "1",
-            time = Date(System.currentTimeMillis())
-        ),
-        MessageModel(
-            messageUid = "2",
-            message = "This is a Message",
-            senderId = "1",
-            time = Date(System.currentTimeMillis())
-        ),
-        MessageModel(
-            messageUid = "1",
-            message = "This is a Message",
-            senderId = "2",
-            time = Date(System.currentTimeMillis())
-        ),
-        MessageModel(
-            messageUid = "1",
-            message = "This is a Message",
-            senderId = "1",
-            time = Date(System.currentTimeMillis())
-        ),
-        MessageModel(
-            messageUid = "2",
-            message = "This is a Message",
-            senderId = "1",
-            time = Date(System.currentTimeMillis())
-        ),
-        MessageModel(
-            messageUid = "2",
-            message = "This is a Message",
-            senderId = "2",
-            time = Date(System.currentTimeMillis())
-        ),
-
-
-        )
-
-    val chatAdapter = ChatAdapter("1")
     private val args by navArgs<ChatFragmentArgs>()
     private val binding by viewBinding(com.fourteen06.emseesquare.databinding.FragmentChatBinding::bind)
     private val viewModel by viewModels<ChatViewModel>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
@@ -77,6 +36,12 @@ class ChatFragment : Fragment(
                 )
             )
         }
+        val userMap = mutableMapOf<String, User>().also {
+            for (i in args.messageRoom.participant) {
+                it.put(i.uid, i)
+            }
+        }
+        val chatAdapter = ChatAdapter(Firebase.auth.currentUser?.uid.toString(), userMap)
         binding.chatRecyclerView.apply {
             adapter = chatAdapter
             layoutManager =
@@ -89,7 +54,6 @@ class ChatFragment : Fragment(
             }[0].name)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        chatAdapter.submitList(this.list)
         binding.included.cardView4.setOnClickListener {
             viewModel.init(
                 ChatViewModelInState.AddNewMessage(
@@ -97,6 +61,35 @@ class ChatFragment : Fragment(
                     args.messageRoom.messageRoomId
                 )
             )
+            this.binding.included.chatEditText.setText("")
+        }
+        viewModel.getCurrentChat(args.messageRoom.messageRoomId).observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Error -> {
+                    makeShortToast(it.message)
+                }
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    chatAdapter.submitList(it.data)
+
+                }
+            }
+        }
+        viewModel.events.observe(viewLifecycleOwner) {
+            when (it) {
+                is ChatViewModelOutState.MakeToast -> {
+                    if (it.isShort) {
+                        makeShortToast(it.message)
+                    } else {
+                        makeLongToast(it.message)
+                    }
+                }
+                ChatViewModelOutState.ShowLoading -> {
+
+                }
+            }
         }
         setHasOptionsMenu(true)
     }
