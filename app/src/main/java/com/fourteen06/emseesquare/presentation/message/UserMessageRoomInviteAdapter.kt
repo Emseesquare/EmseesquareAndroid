@@ -1,49 +1,46 @@
 package com.fourteen06.emseesquare.presentation.message
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.fourteen06.emseesquare.databinding.MessageRecyclerViewLayoutBinding
-import com.fourteen06.emseesquare.models.MessageRoom
-import com.fourteen06.emseesquare.utils.UnixToHuman.getTimeAgo
+import com.fourteen06.emseesquare.models.User
 
-class MessageAdapter(val currentUserUid: String, private val onClick: (MessageRoom) -> Unit) :
-    ListAdapter<MessageRoom, MessageAdapter.ViewHolder>(CustomDiffUtil()) {
+class UserMessageRoomInviteAdapter(
+    private val onClick: (User) -> Unit
+) :
+    ListAdapter<User, UserMessageRoomInviteAdapter.ViewHolder>(CustomDiffUtil()) {
     inner class ViewHolder(val binding: MessageRecyclerViewLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(messageRoom: MessageRoom) {
+        fun bind(user: User) {
             binding.apply {
-                messageRoom.participant.filter {
-                    it.uid != currentUserUid
-                }[0].apply {
-                    userNameTextView.text = name
-                    profileImageView.load(profileImageUrl)
-                }
-                subtitleTextView.text = messageRoom.lastMessage
-                timeTextView.text = getTimeAgo(messageRoom.lastMessageTimestamp.time)
+                userNameTextView.text = user.name
                 root.setOnClickListener {
-                    onClick(messageRoom)
+                    onClick(user)
                 }
-
+                timeTextView.visibility = View.GONE
+                subtitleTextView.visibility = View.GONE
+                profileImageView.load(user.profileImageUrl)
             }
         }
     }
 
 
-    class CustomDiffUtil : DiffUtil.ItemCallback<MessageRoom>() {
+    class CustomDiffUtil : DiffUtil.ItemCallback<User>() {
         override fun areItemsTheSame(
-            oldItem: MessageRoom,
-            newItem: MessageRoom
+            oldItem: User,
+            newItem: User
         ): Boolean {
-            return oldItem.messageRoomId == newItem.messageRoomId
+            return oldItem.uid == newItem.uid
         }
 
         override fun areContentsTheSame(
-            oldItem: MessageRoom,
-            newItem: MessageRoom
+            oldItem: User,
+            newItem: User
         ): Boolean {
             return oldItem == newItem
 

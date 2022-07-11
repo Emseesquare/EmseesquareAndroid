@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.models.MessageModel
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -71,7 +69,9 @@ class ChatFragment : MultistackBaseFragment(
         super.onViewCreated(view, savedInstanceState)
         binding.chatRecyclerView.apply {
             adapter = chatAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(requireContext()).also {
+                it.reverseLayout = false
+            }
         }
         chatAdapter.submitList(this.list)
     }

@@ -60,7 +60,7 @@ class AddNotice : MultistackBaseFragment(
                     AddNoticeViewModelOutStates.NoticeAddedSuccessful -> {
                         binding.attachmentProgressBar.visibility = View.INVISIBLE
                         binding.progressBar.visibility = View.INVISIBLE
-                        findNavController().popBackStack()
+                        findChildNavController().popBackStack()
                     }
                     AddNoticeViewModelOutStates.NoticeAddingLoading -> {
                         binding.attachmentProgressBar.visibility = View.INVISIBLE

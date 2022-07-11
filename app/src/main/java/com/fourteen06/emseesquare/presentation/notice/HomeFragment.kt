@@ -62,7 +62,7 @@ class HomeFragment : MultistackBaseFragment(
     }
 
     private fun sendUserToAddNotice() {
-        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddNotice())
+        findChildNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddNotice())
     }
 
 //    private fun setupDrawerLayout() {

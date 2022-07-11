@@ -1,19 +1,20 @@
 package com.fourteen06.emseesquare.models
 
-import com.google.firebase.auth.ktx.auth
+import android.os.Parcelable
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.ktx.Firebase
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
+@Parcelize
 data class User(
-    var uid: String = Firebase.auth.currentUser?.uid.toString(),
+    var uid: String,
     val id: String,
     val name: String,
     val subTitle: String,
     val profileImageUrl: String,
     val role: UserRole,
     val instituteId: String
-) {
+) : Parcelable {
     fun toHashMap(): HashMap<String, *> {
         return hashMapOf(
             ID to this.id,
@@ -58,18 +59,16 @@ data class User(
             }
         }
 
+        const val UID = "uid"
+        const val ID = "id"
+        const val NAME = "name"
+        const val SUBTITLE = "subtitle"
+        const val PROFILE_IMAGE_URL = "profileImageUrl"
+        const val ROLE = "role"
+        const val INSTITUTE_ID = "instituteId"
     }
-
 }
 
 enum class UserRole {
     Student, Teacher, Admin
 }
-
-private const val UID = "uid"
-private const val ID = "id"
-private const val NAME = "name"
-private const val SUBTITLE = "subtitle"
-private const val PROFILE_IMAGE_URL = "profileImageUrl"
-private const val ROLE = "role"
-private const val INSTITUTE_ID = "instituteId"

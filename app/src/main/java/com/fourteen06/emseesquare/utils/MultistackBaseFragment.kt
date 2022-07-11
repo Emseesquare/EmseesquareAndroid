@@ -57,7 +57,7 @@ open class MultistackBaseFragment(
                         (requireActivity() as OnBackPressedDispatcherOwner).onBackPressedDispatcher.addCallback(
                             viewLifecycleOwner
                         ) {
-                            findNavController()
+                            findChildNavController()
                                 .popBackStack()
                         }
                     }
@@ -82,7 +82,7 @@ open class MultistackBaseFragment(
 
             } else {
                 //act as backbutton
-                findNavController().popBackStack()
+                findChildNavController().popBackStack()
             }
             return true
         }
@@ -90,7 +90,7 @@ open class MultistackBaseFragment(
         return super.onOptionsItemSelected(item)
     }
 
-    fun findNavController(): NavController {
+    fun findChildNavController(): NavController {
         return NavHostFragment.findNavController(requireParentFragment())
     }
 

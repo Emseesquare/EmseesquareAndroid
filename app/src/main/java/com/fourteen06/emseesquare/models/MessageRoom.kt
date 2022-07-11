@@ -1,16 +1,19 @@
 package com.fourteen06.emseesquare.models
 
+import android.os.Parcelable
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
+@Parcelize
 data class MessageRoom(
     val messageRoomId: String,
     val participant: List<User>,
     val lastMessage: String?,
     val lastMessageTimestamp: Date,
     val roomOnline: Boolean
-) {
+) :Parcelable{
     fun toHashMap(): HashMap<String, *> {
         return hashMapOf(
             MESSAGE_ROOM_ID to messageRoomId,
@@ -42,7 +45,7 @@ data class MessageRoom(
                 messageRoomId = dataMap[MESSAGE_ROOM_ID].toString(),
                 participant = users,
                 lastMessageTimestamp = (dataMap[LAST_MESSAGE_TIMESTAMP] as Timestamp).toDate(),
-                roomOnline = (dataMap[ROOM_ONLINE] as Int) == 1,
+                roomOnline = (dataMap[ROOM_ONLINE]) == 1L,
                 lastMessage = dataMap[LAST_MESSAGE].toString()
             )
         }

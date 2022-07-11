@@ -25,7 +25,11 @@
 
     <fragment
         android:id="@+id/rootFragment"
-        android:name="com.fourteen06.emseesquare.presentation.RootFragment" />
+        android:name="com.fourteen06.emseesquare.presentation.RootFragment" >
+        <action
+            android:id="@+id/action_rootFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
     <fragment
         android:id="@+id/otpVerifyFragment"
         android:name="com.fourteen06.emseesquare.presentation.auth.OtpVerifyFragment"
@@ -49,4 +53,12 @@
         app:destination="@id/profileSetupFragment"
         app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.fourteen06.emseesquare.presentation.chatscreen.ChatFragment"
+        android:label="ChatFragment" >
+        <argument
+            android:name="messageRoom"
+            app:argType="com.fourteen06.emseesquare.models.MessageRoom" />
+    </fragment>
 </navigation>

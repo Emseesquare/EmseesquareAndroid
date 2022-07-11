@@ -28,6 +28,7 @@ class AppSharedPreference @Inject constructor(
         }
         instituteId = user.instituteId
         subTitle = user.subTitle
+        uid = user.uid
         setUserStatus(CurrentStatus.REGISTERED)
     }
 
@@ -43,7 +44,8 @@ class AppSharedPreference @Inject constructor(
             },
             instituteId = instituteId.toString(),
             subTitle = subTitle.toString(),
-        )
+            uid=this.uid.toString()
+            )
     }
 
     fun getUserStatus(): CurrentStatus {
@@ -69,6 +71,7 @@ class AppSharedPreference @Inject constructor(
     }
 
     var id by stringPref(USER_ID_KEY)
+    var uid by stringPref(USER_UID_KEY)
     var name by stringPref(USER_NAME_KEY)
     var profilePhoto by stringPref(USER_PROFILE_PICTURE_URL_KEY)
     var role by intPref(USER_ROLE_KEY).withDefault(0)
@@ -80,6 +83,7 @@ class AppSharedPreference @Inject constructor(
         private const val CURRENT_STATUS_KEY = ("CURRENT_STATUS_KEY")
         private const val USER_PROFILE_PICTURE_URL_KEY = ("USER_PROFILE_PICTURE_URL")
         private const val USER_ID_KEY = ("USER_ID_KEY")
+        private const val USER_UID_KEY = ("USER_UID_KEY")
         private const val USER_SUBTITLE_KEY = ("USER_SUBTITLE_KEY")
         private const val USER_INSTITUTE_ID_KEY = ("USER_INSTITUTE_ID_KEY")
         private const val USER_NAME_KEY = ("USER_NAME_KEY")

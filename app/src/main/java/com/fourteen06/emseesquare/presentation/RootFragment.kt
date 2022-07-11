@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentRootBinding
 import com.fourteen06.emseesquare.utils.FragmentStackHostFragment
@@ -130,6 +131,7 @@ class RootFragment : Fragment(R.layout.fragment_root) {
 
     }
 }
+
 
 private const val SELECTED_INDEX = "SELECTED_INDEX"
 private const val HOME_FRAGMENT = "HOME_FRAGMENT"

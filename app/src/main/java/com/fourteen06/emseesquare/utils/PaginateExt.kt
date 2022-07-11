@@ -1,4 +1,4 @@
-package com.fourteen06.emseesquare
+package com.fourteen06.emseesquare.utils
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
