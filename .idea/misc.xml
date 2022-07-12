@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/edittext_curve_bg.xml" value="0.142" />
         <entry key="app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.302" />
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.1" />
@@ -18,6 +19,7 @@
         <entry key="app/src/main/res/drawable/ic_qr_code.xml" value="0.353" />
         <entry key="app/src/main/res/drawable/ic_verify_your_phone_number.xml" value="0.256" />
         <entry key="app/src/main/res/drawable/ic_welcome_emseesquare__your_college_go_through_app_.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/image_foreground_gradient.xml" value="0.1645" />
         <entry key="app/src/main/res/drawable/message_box1.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/message_box2.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/notice_background.xml" value="0.1" />
@@ -26,12 +28,13 @@
         <entry key="app/src/main/res/layout/activity_multistack.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/chat_message_box.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/community_overview_card_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.43419434194341944" />
         <entry key="app/src/main/res/layout/first_fragment_1.xml" value="0.22870370370370371" />
         <entry key="app/src/main/res/layout/first_fragment_2.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/fragment_add_notice.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.2862453531598513" />
-        <entry key="app/src/main/res/layout/fragment_community.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_community.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_login_with_phone_number.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_message.xml" value="0.5" />

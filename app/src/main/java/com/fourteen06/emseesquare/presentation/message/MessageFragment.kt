@@ -49,6 +49,7 @@ class MessageFragment : MultistackBaseFragment(
     }
     private val viewModel by viewModels<MessageViewModel>()
     private lateinit var searchUserJob: Job
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.adapterChangeIndicator.observe(viewLifecycleOwner) {
