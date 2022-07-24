@@ -15,16 +15,16 @@ import coil.load
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentProfileSetupBinding
 import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
-import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileSetupFragment : Fragment(R.layout.fragment_profile_setup) {
-    private val binding by viewBinding(FragmentProfileSetupBinding::bind)
-    private val viewModel by viewModels<AuthViewModel>()
 
+    val viewModel by viewModels<AuthViewModel>()
+    private lateinit var binding: FragmentProfileSetupBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding= FragmentProfileSetupBinding.bind(view)
         if (savedInstanceState != null) {
             binding.apply {
                 idEditText.setText(savedInstanceState.getString(USER_ID_TAG))

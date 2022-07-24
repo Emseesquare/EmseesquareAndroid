@@ -72,7 +72,7 @@ class MessageFragment : MultistackBaseFragment(
                     makeShortToast(it.message)
                 }
                 is Resource.Loading -> {
-                    makeShortToast("Loading")
+
                 }
                 is Resource.Success -> {
                     searchAdapter.submitList(it.data)
