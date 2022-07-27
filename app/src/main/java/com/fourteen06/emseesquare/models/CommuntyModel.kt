@@ -37,7 +37,6 @@ data class CommunityModel(
         const val COMMUNITY_ID = "messageRoomId"
         const val ADMIN = "admin"
         const val COMMUNITY_NAME = "communityName"
-
         const val COMMUNITY_IMAGE = "communityImage"
 
     }

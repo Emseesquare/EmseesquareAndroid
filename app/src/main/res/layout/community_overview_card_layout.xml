@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:foreground="@drawable/image_foreground_gradient"
         android:scaleType="centerCrop"
-        tools:src="@drawable/community_image_placeholder" />
+        android:src="@drawable/community_image_placeholder" />
 
     <TextView
         android:id="@+id/communityTextView"

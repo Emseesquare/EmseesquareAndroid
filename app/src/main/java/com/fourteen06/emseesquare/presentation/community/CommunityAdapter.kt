@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.fourteen06.emseesquare.databinding.CommunityOverviewCardLayoutBinding
 import com.fourteen06.emseesquare.models.CommunityModel
+import com.fourteen06.emseesquare.utils.load
 
 class CommunityAdapter(private val onClick: (CommunityModel) -> Unit) :
     ListAdapter<CommunityModel, CommunityAdapter.ViewHolder>(CustomDiffUtil()) {

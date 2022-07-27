@@ -15,6 +15,6 @@ class CommunitiesCustomCardView : MaterialCardView {
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, (0.8* widthMeasureSpec).toInt())
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec)
     }
 }
