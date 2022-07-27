@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.fourteen06.emseesquare.databinding.NoticeViewBinding
 import com.fourteen06.emseesquare.models.AttachmentType
 import com.fourteen06.emseesquare.models.NoticeModel
+import com.fourteen06.emseesquare.utils.UnixToHuman.getTimeAgo
+import com.fourteen06.emseesquare.utils.load
+import com.fourteen06.emseesquare.utils.loadProfileImage
 
 
 class NoticeAdapter :
@@ -19,11 +21,16 @@ class NoticeAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(notice: NoticeModel) {
             val spannable =
-                SpannableString(notice.user?.subTitle.toString() + "(Posted on:" + notice.time + ")")
+                SpannableString(
+                    notice.user?.subTitle.toString() + "(" + getTimeAgo(
+                        notice.time.time
+                    ) + ")"
+                )
             binding.apply {
                 userName.text = notice.user?.name.toString()
                 userSubtitle.text = spannable
                 noticeDescription.text = notice.content
+                userAvatarImageView.loadProfileImage(notice.user?.profileImageUrl)
                 when (notice.attachmentType) {
                     is AttachmentType.Image -> {
                         contentImage.load(notice.attachmentType.imageUrl)

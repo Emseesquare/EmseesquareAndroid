@@ -20,7 +20,6 @@ class GetUserByName @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) {
     operator fun invoke(name: String?): Flow<Resource<List<User>>> = flow {
-        Logger.d(name)
         emit(Resource.Loading())
         try {
 

@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.fourteen06.emseesquare.databinding.MessageRecyclerViewLayoutBinding
 import com.fourteen06.emseesquare.models.User
+import com.fourteen06.emseesquare.utils.loadProfileImage
 
 class UserMessageRoomInviteAdapter(
     private val onClick: (User) -> Unit
@@ -24,7 +24,7 @@ class UserMessageRoomInviteAdapter(
                 }
                 timeTextView.visibility = View.GONE
                 subtitleTextView.visibility = View.GONE
-                profileImageView.load(user.profileImageUrl)
+                profileImageView.loadProfileImage(user.profileImageUrl)
             }
         }
     }

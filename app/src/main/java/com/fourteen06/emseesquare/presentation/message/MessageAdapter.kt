@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.fourteen06.emseesquare.databinding.MessageRecyclerViewLayoutBinding
 import com.fourteen06.emseesquare.models.MessageRoom
 import com.fourteen06.emseesquare.utils.UnixToHuman.getTimeAgo
+import com.fourteen06.emseesquare.utils.loadProfileImage
 
 class MessageAdapter(val currentUserUid: String, private val onClick: (MessageRoom) -> Unit) :
     ListAdapter<MessageRoom, MessageAdapter.ViewHolder>(CustomDiffUtil()) {
@@ -20,7 +20,7 @@ class MessageAdapter(val currentUserUid: String, private val onClick: (MessageRo
                     it.uid != currentUserUid
                 }[0].apply {
                     userNameTextView.text = name
-                    profileImageView.load(profileImageUrl)
+                    profileImageView.loadProfileImage(profileImageUrl)
                 }
                 subtitleTextView.text = messageRoom.lastMessage
                 timeTextView.text = getTimeAgo(messageRoom.lastMessageTimestamp.time)

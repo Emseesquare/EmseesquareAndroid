@@ -6,7 +6,7 @@ import java.util.*
 
 data class NoticeModel(
     val id: String = "",
-    val time: Date? = null,
+    val time: Date,
     val content: String = "",
     val pins: Int = 0,
     val attachmentType: AttachmentType = AttachmentType.None,

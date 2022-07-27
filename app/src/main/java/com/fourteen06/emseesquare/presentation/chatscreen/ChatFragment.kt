@@ -45,7 +45,7 @@ class ChatFragment : Fragment(
         binding.chatRecyclerView.apply {
             adapter = chatAdapter
             layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
         (activity as AppCompatActivity).apply {
             setSupportActionBar(binding.toolbar)
@@ -73,7 +73,8 @@ class ChatFragment : Fragment(
                 }
                 is Resource.Success -> {
                     chatAdapter.submitList(it.data)
-
+                    try{ binding.chatRecyclerView.smoothScrollToPosition(it.data.size - 1) }
+                    catch (e:java.lang.IllegalArgumentException){}
                 }
             }
         }

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentMessageBinding
+import com.fourteen06.emseesquare.models.MessageRoom
 import com.fourteen06.emseesquare.presentation.RootFragmentDirections
 import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
@@ -19,6 +20,7 @@ import com.fourteen06.emseesquare.utils.Resource
 import com.fourteen06.emseesquare.utils.onQueryTextChanged
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.orhanobut.logger.Logger
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -43,8 +45,7 @@ class MessageFragment : MultistackBaseFragment(
         viewModel.init(MessageViewmodelInStates.MakeNewChatRoom(it.uid))
     }
     val messageAdapter = MessageAdapter(Firebase.auth.currentUser?.uid.toString()) {
-        (parentFragment?.parentFragment)?.findNavController()
-            ?.navigate(RootFragmentDirections.actionRootFragmentToChatFragment(it))
+        sendUserToChatRoom(it)
     }
     private val viewModel by viewModels<MessageViewModel>()
     private lateinit var searchUserJob: Job
@@ -82,6 +83,25 @@ class MessageFragment : MultistackBaseFragment(
         viewModel.messageRoomFlow.observe(viewLifecycleOwner) {
             messageAdapter.submitList(it)
         }
+        viewModel.events.observe(viewLifecycleOwner){
+            when(it){
+                MessageViewmodelOutStates.Uninitialized -> {
+
+                }
+                is MessageViewmodelOutStates.MakeToast -> {
+                    makeShortToast(it.message)
+                }
+                is MessageViewmodelOutStates.MoveToChatRoom -> {
+                    sendUserToChatRoom(it.messageRoom)
+                }
+            }
+        }
+    }
+
+    private fun sendUserToChatRoom(messageRoom: MessageRoom) {
+        (parentFragment?.parentFragment)?.findNavController()
+            ?.navigate(RootFragmentDirections.actionRootFragmentToChatFragment(messageRoom))
+        viewModel.init(MessageViewmodelInStates.RestStateToUninstialized)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -23,7 +23,7 @@ class GetChatUsecase @Inject constructor(
         emit(Resource.Loading())
         try {
             val ref = db.collection(FirestoreRoute.GET_MESSAGES_FROM_ROOM_ID(roomId))
-                .orderBy(MessageModel.TIME, Query.Direction.DESCENDING)
+                .orderBy(MessageModel.TIME, Query.Direction.ASCENDING)
                 .asFlow().map { snapshots ->
                     snapshots.map {
                         it.toMessage()

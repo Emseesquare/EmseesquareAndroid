@@ -11,10 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentProfileSetupBinding
 import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
+import com.fourteen06.emseesquare.utils.loadProfileImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +24,7 @@ class ProfileSetupFragment : Fragment(R.layout.fragment_profile_setup) {
     private lateinit var binding: FragmentProfileSetupBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding= FragmentProfileSetupBinding.bind(view)
+        binding = FragmentProfileSetupBinding.bind(view)
         if (savedInstanceState != null) {
             binding.apply {
                 idEditText.setText(savedInstanceState.getString(USER_ID_TAG))
@@ -62,7 +62,7 @@ class ProfileSetupFragment : Fragment(R.layout.fragment_profile_setup) {
                 }
                 is AuthOutStates.MoveToOTP_Screen -> {}
                 is AuthOutStates.SetProfileImage -> {
-                    binding.profileImageView.load(it.imageUrl)
+                    binding.profileImageView.loadProfileImage(it.imageUrl)
                     this.binding.progressBar.visibility = View.GONE
                 }
             }

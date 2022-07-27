@@ -5,4 +5,5 @@ sealed class MessageViewmodelInStates {
     data class MakeNewChatRoom(val userId: String) : MessageViewmodelInStates()
     object ShowMessageAdapter : MessageViewmodelInStates()
     object ShowSearchAdapter : MessageViewmodelInStates()
+    object RestStateToUninstialized : MessageViewmodelInStates()
 }

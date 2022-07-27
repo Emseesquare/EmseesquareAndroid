@@ -4,13 +4,16 @@ import androidx.lifecycle.*
 import com.fourteen06.emseesquare.repository.message.AddNewMessageRoomUseCase
 import com.fourteen06.emseesquare.repository.message.GetAllCurrentMessageRoomUseCase
 import com.fourteen06.emseesquare.repository.user_setup.GetUserByName
+import com.fourteen06.emseesquare.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
-import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,12 +35,30 @@ class MessageViewModel @Inject constructor(
     val adapterChangeIndicator: LiveData<Boolean>
         get() = _adapterChangeIndicator
 
+    private val eventChannel = Channel<MessageViewmodelOutStates>()
+    val events = eventChannel.receiveAsFlow().asLiveData()
+
     fun init(inStates: MessageViewmodelInStates) {
         when (inStates) {
             is MessageViewmodelInStates.MakeNewChatRoom -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     addNewMessageRoomUseCase(inStates.userId).collect {
-                        Logger.i(it.toString())
+                        when (it) {
+                            is Resource.Error -> {
+                                eventChannel.send(MessageViewmodelOutStates.MakeToast(it.message))
+                            }
+                            is Resource.Loading -> {
+                                eventChannel.send(MessageViewmodelOutStates.Uninitialized)
+
+                            }
+                            is Resource.Success -> {
+                                eventChannel.send(MessageViewmodelOutStates.MoveToChatRoom(it.data))
+                                withContext(Dispatchers.Main){
+                                    _adapterChangeIndicator.value = false
+                                }
+
+                            }
+                        }
                     }
                 }
             }
@@ -50,6 +71,11 @@ class MessageViewModel @Inject constructor(
             MessageViewmodelInStates.ShowSearchAdapter -> {
                 _adapterChangeIndicator.value = true
 
+            }
+            MessageViewmodelInStates.RestStateToUninstialized -> {
+                viewModelScope.launch {
+                    eventChannel.send(MessageViewmodelOutStates.Uninitialized)
+                }
             }
         }
     }

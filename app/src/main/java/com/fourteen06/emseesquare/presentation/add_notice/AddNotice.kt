@@ -7,12 +7,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
-import coil.load
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentAddNoticeBinding
 import com.fourteen06.emseesquare.models.AttachmentType
 import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
+import com.fourteen06.emseesquare.utils.load
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 

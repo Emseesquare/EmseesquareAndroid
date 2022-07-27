@@ -3,12 +3,11 @@ package com.fourteen06.emseesquare.presentation.profile
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import coil.load
-import coil.transform.CircleCropTransformation
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentProfileBinding
 import com.fourteen06.emseesquare.repository.utils.AppSharedPreference
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
+import com.fourteen06.emseesquare.utils.loadProfileImage
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -33,9 +32,7 @@ class ProfileFragment : MultistackBaseFragment(
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             val currentUser = appSharedPreference.getUser()
             binding.apply {
-                profileImageView.load(currentUser.profileImageUrl) {
-                    transformations(CircleCropTransformation())
-                }
+                profileImageView.loadProfileImage(currentUser.profileImageUrl)
                 userNameTextView.setText(currentUser.name)
                 subtitleTextView.setText(currentUser.subTitle)
             }
