@@ -16,7 +16,7 @@ data class CommunityModel(
             ADMIN to admin
         )
     }
-
+    
     companion object {
         suspend fun QueryDocumentSnapshot.toCommunityModel(getUser: suspend (userId: String) -> User): CommunityModel {
             val dataMap = this.data
@@ -34,7 +34,7 @@ data class CommunityModel(
             )
         }
 
-        const val COMMUNITY_ID = "messageRoomId"
+        const val COMMUNITY_ID = "communityId"
         const val ADMIN = "admin"
         const val COMMUNITY_NAME = "communityName"
         const val COMMUNITY_IMAGE = "communityImage"

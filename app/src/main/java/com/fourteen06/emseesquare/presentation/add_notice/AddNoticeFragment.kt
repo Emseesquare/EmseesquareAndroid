@@ -17,7 +17,7 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddNotice : MultistackBaseFragment(
+class AddNoticeFragment : MultistackBaseFragment(
     R.layout.fragment_add_notice,
     R.string.title_add_notice,
     null,

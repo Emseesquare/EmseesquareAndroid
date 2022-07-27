@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/addNotice"
-        android:name="com.fourteen06.emseesquare.presentation.add_notice.AddNotice"
+        android:name="com.fourteen06.emseesquare.presentation.add_notice.AddNoticeFragment"
         android:label="AddNotice" />
 
 </navigation>

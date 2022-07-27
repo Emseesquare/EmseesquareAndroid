@@ -10,6 +10,7 @@ import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.viewModels
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentCommunityBinding
+import com.fourteen06.emseesquare.presentation.notice.HomeFragmentDirections
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
 import com.fourteen06.emseesquare.utils.onQueryTextChanged
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -45,6 +46,7 @@ class CommunityFragment : MultistackBaseFragment(
         }
         adapter.submitList(viewModel.list)
         binding.fab.setOnClickListener {
+            sendUserToAddCommunity()
         }
     }
 
@@ -59,12 +61,10 @@ class CommunityFragment : MultistackBaseFragment(
             searchItem,
             object : MenuItemCompat.OnActionExpandListener {
                 override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-
                     return true
                 }
 
                 override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-
                     return true
                 }
             })
@@ -77,5 +77,8 @@ class CommunityFragment : MultistackBaseFragment(
                 delay(500L)
             }
         }
+    }
+    private fun sendUserToAddCommunity() {
+        findChildNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToAddCommunityFragment())
     }
 }
