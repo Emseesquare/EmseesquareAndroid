@@ -54,7 +54,7 @@ class FileUploadUseCase @Inject constructor(
                         if (isImage) {
                             ref.putFile(file).await()
                         } else {
-                            throw  IllegalStateException("Only Pdf files are acceptable.")
+                            throw  IllegalStateException("Only Images are acceptable.")
                         }
                     }
                 }
