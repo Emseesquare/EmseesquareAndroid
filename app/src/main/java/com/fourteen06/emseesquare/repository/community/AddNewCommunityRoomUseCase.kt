@@ -25,9 +25,9 @@ class AddNewCommunityRoomUseCase @Inject constructor(
     ): Flow<Resource<CommunityModel>> = flow {
         emit(Resource.Loading())
         try {
+            val creatorRef = firestore.collection(PROFILE_COLLECTION).document(community.admin[0])
             val communityRef = firestore.collection(COMMUNITY_COLLECTION).document(communityId)
             communityRef.set(community.toHashMap()).await()
-            val creatorRef = firestore.collection(PROFILE_COLLECTION).document(community.admin[0])
             val profile = creatorRef.get().await()
             creatorRef.set(
                 profile.toUser().toHashMap().also {

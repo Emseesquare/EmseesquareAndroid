@@ -16,9 +16,9 @@ data class CommunityModel(
             ADMIN to admin
         )
     }
-    
+
     companion object {
-        suspend fun QueryDocumentSnapshot.toCommunityModel(getUser: suspend (userId: String) -> User): CommunityModel {
+        suspend fun QueryDocumentSnapshot.toCommunityModel(): CommunityModel {
             val dataMap = this.data
             val adminIdList = dataMap[ADMIN] as List<*>
             val admin = mutableListOf<String>().also {

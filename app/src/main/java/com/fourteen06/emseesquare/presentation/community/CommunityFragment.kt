@@ -10,7 +10,6 @@ import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.viewModels
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentCommunityBinding
-import com.fourteen06.emseesquare.presentation.notice.HomeFragmentDirections
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
 import com.fourteen06.emseesquare.utils.onQueryTextChanged
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -44,7 +43,9 @@ class CommunityFragment : MultistackBaseFragment(
             adapter = this@CommunityFragment.adapter
             setHasFixedSize(true)
         }
-        adapter.submitList(viewModel.list)
+        viewModel.communityLiveData.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
         binding.fab.setOnClickListener {
             sendUserToAddCommunity()
         }
@@ -61,10 +62,12 @@ class CommunityFragment : MultistackBaseFragment(
             searchItem,
             object : MenuItemCompat.OnActionExpandListener {
                 override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                    viewModel.init(CommunityViewModelInState.SearchViewOpen)
                     return true
                 }
 
                 override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                    viewModel.init(CommunityViewModelInState.SearchViewClosed)
                     return true
                 }
             })
@@ -75,9 +78,11 @@ class CommunityFragment : MultistackBaseFragment(
             }
             searchUserJob = MainScope().launch {
                 delay(500L)
+                viewModel.init(CommunityViewModelInState.SearchForCommunity(it))
             }
         }
     }
+
     private fun sendUserToAddCommunity() {
         findChildNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToAddCommunityFragment())
     }
