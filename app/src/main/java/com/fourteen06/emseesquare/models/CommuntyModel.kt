@@ -1,13 +1,16 @@
 package com.fourteen06.emseesquare.models
 
+import android.os.Parcelable
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class CommunityModel(
     val communityId: String,
     val admin: List<String>,
     val communityName: String,
     val communityImage: String
-) {
+) : Parcelable {
     fun toHashMap(): HashMap<String, *> {
         return hashMapOf(
             COMMUNITY_ID to communityId,

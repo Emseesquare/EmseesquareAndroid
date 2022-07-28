@@ -8,8 +8,11 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentCommunityBinding
+import com.fourteen06.emseesquare.models.CommunityModel
+import com.fourteen06.emseesquare.presentation.RootFragmentDirections
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
 import com.fourteen06.emseesquare.utils.onQueryTextChanged
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -34,8 +37,9 @@ class CommunityFragment : MultistackBaseFragment(
     private val viewModel by viewModels<CommunityViewModel>()
     private val binding by viewBinding(FragmentCommunityBinding::bind)
     private val adapter = CommunityAdapter {
-
+        sendUserToCommunityPostFragment(it)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -85,5 +89,11 @@ class CommunityFragment : MultistackBaseFragment(
 
     private fun sendUserToAddCommunity() {
         findChildNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToAddCommunityFragment())
+    }
+
+    private fun sendUserToCommunityPostFragment(community: CommunityModel) {
+        (parentFragment?.parentFragment)?.findNavController()
+            ?.navigate(RootFragmentDirections.actionRootFragmentToCommunityPostFragment(community))
+
     }
 }
