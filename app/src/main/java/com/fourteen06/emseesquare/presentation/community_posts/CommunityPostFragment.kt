@@ -8,12 +8,17 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentCommunityPostBinding
+import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Integer.max
 
 
 @AndroidEntryPoint
@@ -22,11 +27,13 @@ class CommunityPostFragment : Fragment(
 ) {
     private val args by navArgs<CommunityPostFragmentArgs>()
     private val binding by viewBinding(FragmentCommunityPostBinding::bind)
+    private val viewModel by viewModels<CommunityPostViewModel>()
+    private val adapter = CommunityPostAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
-            this.binding.included.chatEditText.setText(
+            this.binding.included.messageInput.setText(
                 savedInstanceState.getString(
                     MESSAGE_EDIT_TEXT_TAG
                 )
@@ -38,6 +45,37 @@ class CommunityPostFragment : Fragment(
             supportActionBar?.setDisplayShowTitleEnabled(false)
         }
         binding.title.text = (args.community.communityName)
+        binding.postRecyclerView.apply {
+            adapter = this@CommunityPostFragment.adapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+//        adapter.submitList(this.list)
+        binding.included.voiceRecordingOrSend.setOnClickListener {
+            viewModel.init(
+                CommunityPostViewModelInStates.SendMessage(
+                    this.binding.included.messageInput.text.toString(),
+                    this.args.community
+                )
+            )
+        }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.events.collect {
+                when (it) {
+                    CommunityPostViewModelOutStates.MessageSendSuccessfully -> {
+                        binding.apply {
+                            included.messageInput.setText("");
+                            postRecyclerView.smoothScrollToPosition(max(adapter.itemCount - 1, 0))
+                        }
+
+                    }
+                    is CommunityPostViewModelOutStates.ShowToast -> {
+                        makeShortToast(it.message)
+
+                    }
+                }
+            }
+        }
         setHasOptionsMenu(true)
     }
 
@@ -61,7 +99,7 @@ class CommunityPostFragment : Fragment(
         super.onSaveInstanceState(outState)
         outState.putString(
             MESSAGE_EDIT_TEXT_TAG,
-            this.binding.included.chatEditText.text.toString()
+            this.binding.included.messageInput.text.toString()
         )
     }
 

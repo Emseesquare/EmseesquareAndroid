@@ -4,13 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.19" />
+        <entry key="app/src/main/res/drawable/background_attachment.xml" value="0.1645" />
         <entry key="app/src/main/res/drawable/edittext_curve_bg.xml" value="0.142" />
+        <entry key="app/src/main/res/drawable/ic_attach_file_black_24dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.302" />
+        <entry key="app/src/main/res/drawable/ic_camera_alt_black_24dp.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_insert_emoticon_black_24dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_logout.xml" value="0.215" />
         <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_message.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_mic_black_24dp.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/ic_people_alt.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_person.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_pin_filled.xml" value="0.1" />
@@ -19,25 +24,30 @@
         <entry key="app/src/main/res/drawable/ic_profile_placeholder.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/ic_qr_code.xml" value="0.353" />
         <entry key="app/src/main/res/drawable/ic_report_community.xml" value="0.215" />
+        <entry key="app/src/main/res/drawable/ic_send.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/ic_verify_your_phone_number.xml" value="0.256" />
         <entry key="app/src/main/res/drawable/ic_welcome_emseesquare__your_college_go_through_app_.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/image_foreground_gradient.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/input_drawable.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/message_box1.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/message_box2.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/notice_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/reaction_background.xml" value="0.2905" />
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_multistack.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/chat_message_box.xml" value="0.5" />
         <entry key="app/src/main/res/layout/community_overview_card_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/community_post_view.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/community_reaction_layout.xml" value="1.0" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.43419434194341944" />
         <entry key="app/src/main/res/layout/first_fragment_1.xml" value="0.22870370370370371" />
         <entry key="app/src/main/res/layout/first_fragment_2.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/fragment_add_notice.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.2862453531598513" />
         <entry key="app/src/main/res/layout/fragment_community.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_community_post.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_community_post.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_community_posts.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_login_with_phone_number.xml" value="0.22" />
@@ -48,9 +58,11 @@
         <entry key="app/src/main/res/layout/fragment_profile_setup.xml" value="0.3578125" />
         <entry key="app/src/main/res/layout/fragment_root.xml" value="0.3101851851851852" />
         <entry key="app/src/main/res/layout/initial_fragment.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/input_attachment_layout.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/input_layout.xml" value="0.3578125" />
         <entry key="app/src/main/res/layout/message_layout1.xml" value="0.33" />
         <entry key="app/src/main/res/layout/message_layout2.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/message_recycler_view_layout.xml" value="0.17316017316017315" />
+        <entry key="app/src/main/res/layout/message_recycler_view_layout.xml" value="0.5" />
         <entry key="app/src/main/res/layout/notice_view.xml" value="0.47249647390691113" />
         <entry key="app/src/main/res/layout/root_fragment.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/stack_host_fragment.xml" value="0.18333333333333332" />
