@@ -50,7 +50,9 @@ class CommunityPostFragment : Fragment(
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
-//        adapter.submitList(this.list)
+        viewModel.getCommunityPosts(args.community).observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
         binding.included.voiceRecordingOrSend.setOnClickListener {
             viewModel.init(
                 CommunityPostViewModelInStates.SendMessage(
@@ -65,7 +67,6 @@ class CommunityPostFragment : Fragment(
                     CommunityPostViewModelOutStates.MessageSendSuccessfully -> {
                         binding.apply {
                             included.messageInput.setText("");
-                            postRecyclerView.smoothScrollToPosition(max(adapter.itemCount - 1, 0))
                         }
 
                     }

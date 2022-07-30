@@ -1,5 +1,7 @@
 package com.fourteen06.emseesquare.models
 
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import java.util.*
 
 data class CommunityPostModel(
@@ -21,9 +23,23 @@ data class CommunityPostModel(
     )
 
     companion object Factory {
-//        suspend fun QueryDocumentSnapshot.toCommunityPostModel(getUser: (id: String) -> User?): CommunityPostModel {
-//
-//        }
+        suspend fun QueryDocumentSnapshot.toCommunityPostModel(getUser: suspend (id: String) -> User?): CommunityPostModel {
+            val dataMap = this.data
+            val user = getUser(dataMap[USER].toString())
+            val reaction = mutableListOf<Reaction>().also { reactionList ->
+                (dataMap[REACTIONS] as Map<*, *>).forEach {
+                    reactionList.add(Reaction(symbol = it.key.toString(),it.value.toString().toInt()))
+
+                }
+            }
+            return CommunityPostModel(
+                communityPostId = dataMap[COMMUNITY_POST_ID].toString(),
+                time = (dataMap[TIME] as Timestamp).toDate(),
+                content = dataMap[CONTENT].toString(),
+                user = user,
+                reactions = reaction
+            )
+        }
 
         private const val COMMUNITY_POST_ID = "communityPostId"
         private const val TIME = "time"

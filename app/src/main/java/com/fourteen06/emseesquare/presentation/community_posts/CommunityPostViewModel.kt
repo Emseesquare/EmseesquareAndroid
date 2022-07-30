@@ -1,9 +1,12 @@
 package com.fourteen06.emseesquare.presentation.community_posts
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.fourteen06.emseesquare.models.AttachmentType
+import com.fourteen06.emseesquare.models.CommunityModel
 import com.fourteen06.emseesquare.repository.community.AddCommunityPostUseCase
+import com.fourteen06.emseesquare.repository.community.GetCommunityPostUseCase
 import com.fourteen06.emseesquare.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,10 +17,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommunityPostViewModel @Inject constructor(
-    private val addCommunityPostUseCase: AddCommunityPostUseCase
+    private val addCommunityPostUseCase: AddCommunityPostUseCase,
+    private val getCommunityPostUseCase: GetCommunityPostUseCase
 ) : ViewModel() {
     private val eventChannel = Channel<CommunityPostViewModelOutStates>()
     val events = eventChannel.receiveAsFlow()
+    fun getCommunityPosts(communityModel: CommunityModel) =
+        getCommunityPostUseCase(communityModel = communityModel).asLiveData()
+
     fun init(inStates: CommunityPostViewModelInStates) {
         when (inStates) {
             is CommunityPostViewModelInStates.SendMessage -> {
