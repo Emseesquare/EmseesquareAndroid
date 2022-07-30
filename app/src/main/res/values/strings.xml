@@ -21,6 +21,7 @@
     <string name="id">ID</string>
     <string name="instituteId">Institute ID</string>
     <string name="role">Role</string>
+    <string name="title_add_community">AddCommunity</string>
 
     <string-array name="roles">
         <item>Student</item>

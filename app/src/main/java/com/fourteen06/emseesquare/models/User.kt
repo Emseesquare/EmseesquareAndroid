@@ -13,9 +13,9 @@ data class User(
     val subTitle: String,
     val profileImageUrl: String,
     val role: UserRole,
-    val instituteId: String
+    val instituteId: String,
 ) : Parcelable {
-    fun toHashMap(): HashMap<String, *> {
+    fun toHashMap(): MutableMap<String, Any> {
         return hashMapOf(
             ID to this.id,
             NAME to this.name,
@@ -27,8 +27,9 @@ data class User(
                 UserRole.Teacher -> UserRole.Teacher
             },
             INSTITUTE_ID to instituteId,
-            UID to uid
-        )
+            UID to uid,
+
+            )
     }
 
     companion object Factory {
@@ -52,8 +53,24 @@ data class User(
                         UserRole.Student
                     },
                     instituteId = dataMap[INSTITUTE_ID] as String,
-                    uid = dataMap[UID].toString()
+                    uid = dataMap[UID].toString(),
                 )
+            } else {
+                throw IllegalStateException("Datamap is null")
+            }
+        }
+
+        fun DocumentSnapshot.toUserCommunities(): List<String> {
+            val dataMap = this.data
+            if (dataMap != null) {
+                val adminIdList = dataMap[COMMUNITY_REFS] as List<*>?
+                if (adminIdList.isNullOrEmpty()) return emptyList()
+                return mutableListOf<String>().also {
+                    for (i in adminIdList) {
+                        it.add(i.toString())
+                    }
+                }
+
             } else {
                 throw IllegalStateException("Datamap is null")
             }
@@ -66,6 +83,7 @@ data class User(
         const val PROFILE_IMAGE_URL = "profileImageUrl"
         const val ROLE = "role"
         const val INSTITUTE_ID = "instituteId"
+        const val COMMUNITY_REFS = "communityRefs"
     }
 }
 

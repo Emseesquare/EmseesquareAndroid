@@ -8,8 +8,11 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentCommunityBinding
+import com.fourteen06.emseesquare.models.CommunityModel
+import com.fourteen06.emseesquare.presentation.RootFragmentDirections
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
 import com.fourteen06.emseesquare.utils.onQueryTextChanged
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -34,8 +37,9 @@ class CommunityFragment : MultistackBaseFragment(
     private val viewModel by viewModels<CommunityViewModel>()
     private val binding by viewBinding(FragmentCommunityBinding::bind)
     private val adapter = CommunityAdapter {
-
+        sendUserToCommunityPostFragment(it)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,8 +47,11 @@ class CommunityFragment : MultistackBaseFragment(
             adapter = this@CommunityFragment.adapter
             setHasFixedSize(true)
         }
-        adapter.submitList(viewModel.list)
+        viewModel.communityLiveData.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
         binding.fab.setOnClickListener {
+            sendUserToAddCommunity()
         }
     }
 
@@ -59,12 +66,12 @@ class CommunityFragment : MultistackBaseFragment(
             searchItem,
             object : MenuItemCompat.OnActionExpandListener {
                 override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-
+                    viewModel.init(CommunityViewModelInState.SearchViewOpen)
                     return true
                 }
 
                 override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-
+                    viewModel.init(CommunityViewModelInState.SearchViewClosed)
                     return true
                 }
             })
@@ -75,7 +82,18 @@ class CommunityFragment : MultistackBaseFragment(
             }
             searchUserJob = MainScope().launch {
                 delay(500L)
+                viewModel.init(CommunityViewModelInState.SearchForCommunity(it))
             }
         }
+    }
+
+    private fun sendUserToAddCommunity() {
+        findChildNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToAddCommunityFragment())
+    }
+
+    private fun sendUserToCommunityPostFragment(community: CommunityModel) {
+        (parentFragment?.parentFragment)?.findNavController()
+            ?.navigate(RootFragmentDirections.actionRootFragmentToCommunityPostFragment(community))
+
     }
 }

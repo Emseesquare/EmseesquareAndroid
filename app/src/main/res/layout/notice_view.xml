@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
+    android:layout_marginHorizontal="6dp"
     android:layout_marginVertical="4dp"
-    app:cardCornerRadius="12dp"
+    app:cardCornerRadius="4dp"
     app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="16dp">
+        android:paddingVertical="12dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -32,7 +32,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/userName"
-            style="@style/Notice.User.Username"
+            style="@style/App.User.Username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -43,7 +43,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/userSubtitle"
-            style="@style/Notice.User.Position"
+            style="@style/App.User.Info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

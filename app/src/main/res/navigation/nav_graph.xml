@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_rootFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_rootFragment_to_communityPostFragment"
+            app:destination="@id/communityPostFragment" />
     </fragment>
     <fragment
         android:id="@+id/otpVerifyFragment"
@@ -60,5 +63,13 @@
         <argument
             android:name="messageRoom"
             app:argType="com.fourteen06.emseesquare.models.MessageRoom" />
+    </fragment>
+    <fragment
+        android:id="@+id/communityPostFragment"
+        android:name="com.fourteen06.emseesquare.presentation.community_posts.CommunityPostFragment"
+        android:label="CommunityPostFragment" >
+        <argument
+            android:name="community"
+            app:argType="com.fourteen06.emseesquare.models.CommunityModel" />
     </fragment>
 </navigation>

@@ -32,10 +32,10 @@
 
     <include
         android:id="@+id/included"
-        layout="@layout/chat_message_box"
+        layout="@layout/input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginHorizontal="4dp"
         android:layout_marginBottom="4dp"
         tools:layout_editor_absoluteY="583dp" />
 </LinearLayout>

@@ -13,10 +13,13 @@ class CommunityAdapter(private val onClick: (CommunityModel) -> Unit) :
     ListAdapter<CommunityModel, CommunityAdapter.ViewHolder>(CustomDiffUtil()) {
     inner class ViewHolder(val binding: CommunityOverviewCardLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(messageRoom: CommunityModel) {
+        fun bind(community: CommunityModel) {
             binding.apply {
-                communityImageView.load(messageRoom.communityImage)
-                communityTextView.text = messageRoom.communityName
+                communityImageView.load(community.communityImage)
+                communityTextView.text = community.communityName
+                root.setOnClickListener{
+                    onClick(community)
+                }
             }
         }
     }

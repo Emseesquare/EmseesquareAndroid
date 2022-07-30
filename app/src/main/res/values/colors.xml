@@ -15,5 +15,8 @@
     <color name="titleColor">#5C5C5C</color>
 
     <color name="white_">#ECECEC</color>
-
+    <color name="message_input_button_inactive">@color/gray</color>
+    <color name="floating_message_send">@color/green_dark</color>
+    <color name="green_dark">#19887a</color>
+    <color name="gray">#88898b</color>
 </resources>

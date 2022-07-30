@@ -1,4 +1,4 @@
-package com.fourteen06.emseesquare.presentation.add_notice
+package com.fourteen06.emseesquare.presentation.add_community
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -17,9 +17,9 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddNotice : MultistackBaseFragment(
+class AddCommunityFragment : MultistackBaseFragment(
     R.layout.fragment_add_notice,
-    R.string.title_add_notice,
+    R.string.title_add_community,
     null,
     false,
     true,
@@ -28,12 +28,16 @@ class AddNotice : MultistackBaseFragment(
     R.menu.generic_tick_menu
 ) {
     private val binding by viewBinding(FragmentAddNoticeBinding::bind)
-    private val viewModel by viewModels<AddNoticeViewModel>()
-
+    private val viewModel by viewModels<AddCommunityViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
-            binding.editText.setText(savedInstanceState.getString(DESCRIPTION_TEXT_KEY, ""))
+            binding.editText.setText(
+                savedInstanceState.getString(
+                    DESCRIPTION_TEXT_KEY,
+                    ""
+                )
+            )
 
         }
         restoreAttachment()
@@ -41,41 +45,39 @@ class AddNotice : MultistackBaseFragment(
             if (it == null) {
                 makeShortToast(getString(R.string.no_file_selected))
             } else {
-                viewModel.init(AddNoticeViewModelInStates.UploadFileButtonClicked(it))
+                viewModel.init(AddCommunityViewModelInStates.UploadFileButtonClicked(it))
             }
         }
-
+        binding.uploadButton.setOnClickListener {
+            chooserLauncher.launch("*/*")
+        }
         viewModel.events.asLiveData(viewLifecycleOwner.lifecycleScope.coroutineContext)
             .observe(viewLifecycleOwner) {
                 when (it) {
-                    is AddNoticeViewModelOutStates.AttachmentLoadedSuccessful -> {
+                    is AddCommunityViewModelOutStates.AttachmentLoadedSuccessful -> {
                         binding.attachmentProgressBar.visibility = View.INVISIBLE
                         binding.progressBar.visibility = View.INVISIBLE
-
-                        viewModel.init(AddNoticeViewModelInStates.SaveAttachment(it.attachmentType))
+                        viewModel.init(AddCommunityViewModelInStates.SaveAttachment(it.attachmentType))
                     }
-                    AddNoticeViewModelOutStates.AttachmentLoading -> {
+                    AddCommunityViewModelOutStates.AttachmentLoading -> {
                         binding.attachmentProgressBar.visibility = View.VISIBLE
                     }
-                    AddNoticeViewModelOutStates.NoticeAddedSuccessful -> {
+                    AddCommunityViewModelOutStates.CommunityAddedSuccessful -> {
                         binding.attachmentProgressBar.visibility = View.INVISIBLE
                         binding.progressBar.visibility = View.INVISIBLE
                         findChildNavController().popBackStack()
                     }
-                    AddNoticeViewModelOutStates.NoticeAddingLoading -> {
+                    AddCommunityViewModelOutStates.CommunityAddingLoading -> {
                         binding.attachmentProgressBar.visibility = View.INVISIBLE
                         binding.progressBar.visibility = View.VISIBLE
                     }
-                    is AddNoticeViewModelOutStates.ErrorOccured -> {
+                    is AddCommunityViewModelOutStates.ErrorOccured -> {
                         makeShortToast(it.message)
                         binding.attachmentProgressBar.visibility = View.INVISIBLE
                         binding.progressBar.visibility = View.INVISIBLE
                     }
                 }
             }
-        binding.uploadButton.setOnClickListener {
-            chooserLauncher.launch("*/*")
-        }
     }
 
     private fun restoreAttachment() {
@@ -106,17 +108,19 @@ class AddNotice : MultistackBaseFragment(
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(DESCRIPTION_TEXT_KEY, this.binding.editText.text.toString())
+        outState.putString(
+            DESCRIPTION_TEXT_KEY,
+            this.binding.editText.text.toString()
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.tick_menu) {
-            viewModel.init(AddNoticeViewModelInStates.UploadNotice(binding.editText.text.toString()))
+            viewModel.init(AddCommunityViewModelInStates.AddNewCommunity(binding.editText.text.toString()))
             return true
         }
         return super.onOptionsItemSelected(item)
     }
-
 }
 
 private const val DESCRIPTION_TEXT_KEY = "DESCRIPTION_TEXT_KEY"

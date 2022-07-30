@@ -30,7 +30,7 @@ class ChatFragment : Fragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
-            this.binding.included.chatEditText.setText(
+            this.binding.included.messageInput.setText(
                 savedInstanceState.getString(
                     MESSAGE_EDIT_TEXT_TAG
                 )
@@ -54,14 +54,14 @@ class ChatFragment : Fragment(
             }[0].name)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        binding.included.cardView4.setOnClickListener {
+        binding.included.voiceRecordingOrSend.setOnClickListener {
             viewModel.init(
                 ChatViewModelInState.AddNewMessage(
-                    this.binding.included.chatEditText.text.toString(),
+                    this.binding.included.messageInput.text.toString(),
                     args.messageRoom.messageRoomId
                 )
             )
-            this.binding.included.chatEditText.setText("")
+            this.binding.included.messageInput.setText("")
         }
         viewModel.getCurrentChat(args.messageRoom.messageRoomId).observe(viewLifecycleOwner) {
             when (it) {
@@ -73,8 +73,10 @@ class ChatFragment : Fragment(
                 }
                 is Resource.Success -> {
                     chatAdapter.submitList(it.data)
-                    try{ binding.chatRecyclerView.smoothScrollToPosition(it.data.size - 1) }
-                    catch (e:java.lang.IllegalArgumentException){}
+                    try {
+                        binding.chatRecyclerView.smoothScrollToPosition(it.data.size - 1)
+                    } catch (e: java.lang.IllegalArgumentException) {
+                    }
                 }
             }
         }
@@ -108,7 +110,7 @@ class ChatFragment : Fragment(
         super.onSaveInstanceState(outState)
         outState.putString(
             MESSAGE_EDIT_TEXT_TAG,
-            this.binding.included.chatEditText.text.toString()
+            this.binding.included.messageInput.text.toString()
         )
     }
 
