@@ -3,9 +3,11 @@ package com.fourteen06.emseesquare.presentation.chatscreen
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,10 +16,13 @@ import com.fourteen06.emseesquare.models.User
 import com.fourteen06.emseesquare.utils.AlertExt.makeLongToast
 import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
 import com.fourteen06.emseesquare.utils.Resource
+import com.fourteen06.emseesquare.utils.getFileName
+import com.fourteen06.emseesquare.utils.getTmpFileUri
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class ChatFragment : Fragment(
@@ -26,6 +31,14 @@ class ChatFragment : Fragment(
     private val args by navArgs<ChatFragmentArgs>()
     private val binding by viewBinding(com.fourteen06.emseesquare.databinding.FragmentChatBinding::bind)
     private val viewModel by viewModels<ChatViewModel>()
+    private val takeImageResult =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+            if (isSuccess) {
+                applyAttachment()
+            } else {
+                viewModel.init(ChatViewModelInState.NullifyAttachment)
+            }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,6 +49,8 @@ class ChatFragment : Fragment(
                 )
             )
         }
+        applyAttachment()
+        binding.included.addAttachment.visibility = View.GONE
         val userMap = mutableMapOf<String, User>().also {
             for (i in args.messageRoom.participant) {
                 it.put(i.uid, i)
@@ -61,7 +76,6 @@ class ChatFragment : Fragment(
                     args.messageRoom.messageRoomId
                 )
             )
-            this.binding.included.messageInput.setText("")
         }
         viewModel.getCurrentChat(args.messageRoom.messageRoomId).observe(viewLifecycleOwner) {
             when (it) {
@@ -92,9 +106,42 @@ class ChatFragment : Fragment(
                 ChatViewModelOutState.ShowLoading -> {
 
                 }
+                ChatViewModelOutState.MessageSendSuccessfully -> {
+                    binding.included.attachmentWindow.progressLoading.visibility = View.INVISIBLE
+                    this.binding.included.messageInput.text.clear()
+                }
+                ChatViewModelOutState.ShowImageUploading -> {
+                    binding.included.attachmentWindow.progressLoading.visibility = View.VISIBLE
+                }
+            }
+        }
+        binding.included.takePicture.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                getTmpFileUri().let { uri ->
+                    val fileName = getFileName(uri)
+                    takeImageResult.launch(uri)
+                    viewModel.init(ChatViewModelInState.SetImageUri(uri, fileName))
+                }
             }
         }
         setHasOptionsMenu(true)
+    }
+
+    private fun applyAttachment() {
+        binding.included.attachmentWindow.apply {
+            viewModel.latestTmpUri.observe(viewLifecycleOwner) {
+                if (it == null) {
+                    binding.included.attachmentExpandableLayout.collapse()
+
+                } else {
+                    imageView2.setImageURI(it)
+                    binding.included.attachmentExpandableLayout.expand()
+                }
+            }
+            viewModel.fileName.observe(viewLifecycleOwner) {
+                textView.text = it.toString()
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -113,6 +160,7 @@ class ChatFragment : Fragment(
             this.binding.included.messageInput.text.toString()
         )
     }
+
 
     companion object {
         private val MESSAGE_EDIT_TEXT_TAG = "MESSAGE_EDIT_TEXT_TAG"

@@ -9,4 +9,6 @@ object StorageRoutes {
     fun getProfilePhotoStorageUrl(uid: String?) =
         "$PROFILE_COLLECTION_STORAGE/${uid.toString()}"
 
+    fun GET_CHAT_IMAGE_STORAGE_URL(roomId: String, fileName: String?) =
+        MESSAGE_COLLECTION_STORAGE + "/${roomId}/${fileName}"
 }

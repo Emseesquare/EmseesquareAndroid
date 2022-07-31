@@ -5,13 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/input_attachment_layout"
-        android:visibility="gone"
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/attachmentExpandableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_"
+        app:el_duration="1000"
+        app:el_parallax="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/attachmentWindow"
+            layout="@layout/input_attachment_layout" />
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/messageInputContainer"
@@ -22,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/voiceRecordingOrSend"
-        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintTop_toBottomOf="@+id/attachmentExpandableLayout"
         tools:context="com.example.chattutorial.ChannelActivity">
 
         <ImageButton
@@ -52,6 +61,9 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:background="@null"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_attach_file_black_24dp"
             app:layout_constraintRight_toLeftOf="@+id/takePicture"
             app:tint="@color/message_input_button_inactive" />
@@ -62,6 +74,9 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="20dp"
             android:background="@null"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_camera_alt_black_24dp"
             app:layout_constraintRight_toRightOf="parent"
             app:tint="@color/message_input_button_inactive" />

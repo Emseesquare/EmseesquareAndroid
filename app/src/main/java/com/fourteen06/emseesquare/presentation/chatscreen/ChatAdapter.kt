@@ -1,6 +1,7 @@
 package com.fourteen06.emseesquare.presentation.chatscreen
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.fourteen06.emseesquare.databinding.MessageLayout1Binding
 import com.fourteen06.emseesquare.databinding.MessageLayout2Binding
+import com.fourteen06.emseesquare.models.AttachmentType
 import com.fourteen06.emseesquare.models.MessageModel
 import com.fourteen06.emseesquare.models.User
 import com.fourteen06.emseesquare.utils.UnixToHuman
+import com.fourteen06.emseesquare.utils.load
 import com.fourteen06.emseesquare.utils.loadProfileImage
 
 class ChatAdapter(private val uid: String, private val userMap: Map<String, User>) :
@@ -26,6 +29,12 @@ class ChatAdapter(private val uid: String, private val userMap: Map<String, User
                 chatMessage.setText(model.message)
                 subtitleTextView.setText(UnixToHuman.getTimeAgo(model.time.time))
                 userAvatarImageView.loadProfileImage(userMap[model.senderId]?.profileImageUrl)
+                if (model.attachmentType == AttachmentType.None) {
+                    imageView.visibility = View.GONE
+                } else {
+                    imageView.load(model.attachmentType.toURL())
+                    imageView.visibility = View.VISIBLE
+                }
             }
         }
 
@@ -37,7 +46,12 @@ class ChatAdapter(private val uid: String, private val userMap: Map<String, User
                 chatMessage.setText(model.message)
                 subtitleTextView.setText(UnixToHuman.getTimeAgo(model.time.time))
                 userAvatarImageView.loadProfileImage(userMap[model.senderId]?.profileImageUrl)
-
+                if (model.attachmentType == AttachmentType.None) {
+                    imageView.visibility = View.GONE
+                } else {
+                    imageView.load(model.attachmentType.toURL())
+                    imageView.visibility = View.VISIBLE
+                }
             }
         }
 
