@@ -48,6 +48,7 @@
         <EditText
             android:id="@+id/messageInput"
             android:layout_width="0dp"
+            android:textCursorDrawable="@null"
             android:layout_height="match_parent"
             android:layout_marginStart="12dp"
             android:background="@android:color/transparent"

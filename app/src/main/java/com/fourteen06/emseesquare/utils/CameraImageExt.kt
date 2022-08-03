@@ -1,7 +1,9 @@
 package com.fourteen06.emseesquare.utils
 
+import android.content.ContentResolver
 import android.net.Uri
 import android.provider.OpenableColumns
+import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.fourteen06.emseesquare.BuildConfig
@@ -9,12 +11,12 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 fun Fragment.getTmpFileUri(): Uri {
     val tmpFile = File.createTempFile(createUniquePictureName(), ".png").apply {
         createNewFile()
         deleteOnExit()
     }
-
     return FileProvider.getUriForFile(
         requireContext().applicationContext,
         "${BuildConfig.APPLICATION_ID}.provider",
@@ -48,3 +50,21 @@ fun Fragment.getFileName(uri: Uri): String? {
     }
     return result
 }
+
+fun Fragment.getMimeType(uri: Uri): String? {
+    var mimeType: String? = null
+    mimeType = if (ContentResolver.SCHEME_CONTENT == uri.scheme) {
+        val cr: ContentResolver = requireContext().contentResolver
+        cr.getType(uri)
+    } else {
+        val fileExtension = MimeTypeMap.getFileExtensionFromUrl(
+            uri
+                .toString()
+        )
+        MimeTypeMap.getSingleton().getMimeTypeFromExtension(
+            fileExtension.lowercase(Locale.getDefault())
+        )
+    }
+    return mimeType
+}
+

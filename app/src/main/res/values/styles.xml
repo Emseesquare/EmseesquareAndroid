@@ -46,6 +46,7 @@
         <item name="android:hint">@string/phone_number_edit_text_hint</item>
         <item name="boxStrokeColor">@color/green_500</item>
         <item name="hintTextColor">@color/green_500</item>
+    <item name="android:textCursorDrawable">@null</item>
         <item name="prefixText">+91-</item>
     </style>
 
@@ -69,6 +70,7 @@
 
     <style name="App.EditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/green_500</item>
+        <item name="android:textCursorDrawable">@null</item>
         <item name="hintTextColor">@color/green_500</item>
     </style>
     <style name="App.User.Username" parent="Widget.MaterialComponents.TextView">

@@ -8,7 +8,7 @@ data class CommunityPostModel(
     val communityPostId: String,
     val time: Date,
     val content: String,
-    val attachmentType: AttachmentType = AttachmentType.None,
+    val attachmentType: AttachmentType,
     val user: User? = null,
     val reactions: List<Reaction>
 ) {
@@ -28,16 +28,34 @@ data class CommunityPostModel(
             val user = getUser(dataMap[USER].toString())
             val reaction = mutableListOf<Reaction>().also { reactionList ->
                 (dataMap[REACTIONS] as Map<*, *>).forEach {
-                    reactionList.add(Reaction(symbol = it.key.toString(),it.value.toString().toInt()))
+                    reactionList.add(
+                        Reaction(
+                            symbol = it.key.toString(),
+                            it.value.toString().toInt()
+                        )
+                    )
 
                 }
             }
+            val attachmentType =
+                when (dataMap[MessageModel.ATTACHMENT_TYPE] ?: AttachmentType.None) {
+                    1L -> {
+                        AttachmentType.Image(imageUrl = dataMap[MessageModel.ATTACHMENT_URL] as String)
+                    }
+                    2L -> {
+                        AttachmentType.File(fileUrl = dataMap[MessageModel.ATTACHMENT_URL] as String)
+                    }
+                    else -> {
+                        AttachmentType.None
+                    }
+                }
             return CommunityPostModel(
                 communityPostId = dataMap[COMMUNITY_POST_ID].toString(),
                 time = (dataMap[TIME] as Timestamp).toDate(),
                 content = dataMap[CONTENT].toString(),
                 user = user,
-                reactions = reaction
+                reactions = reaction,
+                attachmentType = attachmentType
             )
         }
 
