@@ -4,15 +4,16 @@ import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fourteen06.emseesquare.databinding.CommunityPostViewBinding
 import com.fourteen06.emseesquare.databinding.CommunityReactionLayoutBinding
-import com.fourteen06.emseesquare.databinding.NoticeViewBinding
 import com.fourteen06.emseesquare.models.AttachmentType
 import com.fourteen06.emseesquare.models.CommunityPostModel
 import com.fourteen06.emseesquare.utils.UnixToHuman.getTimeAgo
+import com.fourteen06.emseesquare.utils.dpToPx
 import com.fourteen06.emseesquare.utils.load
 import com.fourteen06.emseesquare.utils.loadProfileImage
 
@@ -36,6 +37,7 @@ class CommunityPostAdapter :
                 when (post.attachmentType) {
                     is AttachmentType.Image -> {
                         contentImage.load(post.attachmentType.imageUrl)
+                        imageHolderCardView.visibility = View.VISIBLE
                     }
                     AttachmentType.None -> {
                         imageHolderCardView.visibility = View.GONE
@@ -44,6 +46,23 @@ class CommunityPostAdapter :
 
                     }
                 }
+                reactionFlexBox.apply {
+                    removeAllViews()
+                    val reactionButtonParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    val margin = itemView.context.dpToPx(2)
+                    reactionButtonParams.setMargins(margin, margin, margin, margin)
+                    for (reaction in post.reactions) {
+                        val view =
+                            CommunityReactionLayoutBinding.inflate(LayoutInflater.from(itemView.context))
+                        view.root.setText(reaction.symbol + reaction.count)
+                        view.root.setLayoutParams(reactionButtonParams)
+                        this.addView(view.root)
+                    }
+                }
+
             }
         }
     }

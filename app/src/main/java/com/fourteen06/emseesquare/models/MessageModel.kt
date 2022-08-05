@@ -8,25 +8,40 @@ data class MessageModel(
     val messageUid: String,
     val senderId: String,
     val message: String,
-    val time: Date
+    val time: Date,
+    val attachmentType: AttachmentType
 ) {
     fun toHashMap(): HashMap<String, *> {
         return hashMapOf(
             MESSAGE_UID to messageUid,
             SENDER_ID to senderId,
             MESSAGE to message,
-            TIME to time
+            TIME to time,
+            ATTACHMENT_URL to attachmentType.toURL(),
+            ATTACHMENT_TYPE to attachmentType.toType()
         )
     }
 
     companion object Factory {
         suspend fun QueryDocumentSnapshot.toMessage(): MessageModel {
             val dataMap = this.data
+            val attachmentType = when (dataMap[ATTACHMENT_TYPE] ?: AttachmentType.None) {
+                1L -> {
+                    AttachmentType.Image(imageUrl = dataMap[ATTACHMENT_URL] as String)
+                }
+                2L -> {
+                    AttachmentType.File(fileUrl = dataMap[ATTACHMENT_URL] as String)
+                }
+                else -> {
+                    AttachmentType.None
+                }
+            }
             return MessageModel(
                 messageUid = dataMap[MESSAGE_UID].toString(),
                 senderId = dataMap[SENDER_ID].toString(),
                 message = dataMap[MESSAGE].toString(),
                 time = (dataMap[TIME] as Timestamp).toDate(),
+                attachmentType = attachmentType
             )
 
         }
@@ -35,5 +50,8 @@ data class MessageModel(
         const val SENDER_ID = "senderId"
         const val MESSAGE = "message"
         const val TIME = "time"
+        const val ATTACHMENT_URL = "attachmentUrl"
+        const val ATTACHMENT_TYPE = "attachmentType"
+
     }
 }

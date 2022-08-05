@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
@@ -16,9 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentCommunityPostBinding
 import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
+import com.fourteen06.emseesquare.utils.getFileName
+import com.fourteen06.emseesquare.utils.getMimeType
+import com.fourteen06.emseesquare.utils.getTmpFileUri
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Integer.max
 
 
 @AndroidEntryPoint
@@ -29,6 +32,59 @@ class CommunityPostFragment : Fragment(
     private val binding by viewBinding(FragmentCommunityPostBinding::bind)
     private val viewModel by viewModels<CommunityPostViewModel>()
     private val adapter = CommunityPostAdapter()
+    private val takeImageResult =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+            if (isSuccess) {
+                applyImages()
+            } else {
+                makeShortToast(getString(R.string.no_file_selected))
+                viewModel.init(CommunityPostViewModelInStates.NullifyAttachment)
+            }
+        }
+    private val chooserLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        if (it == null) {
+            viewModel.init(CommunityPostViewModelInStates.NullifyAttachment)
+            makeShortToast(getString(R.string.no_file_selected))
+        } else {
+            val uriMime = getMimeType(it)
+            val fileType = when {
+                uriMime!!.contains("image") -> CommunityPostViewModelInStates.FileType.IMAGE
+                uriMime.contains("pdf") -> CommunityPostViewModelInStates.FileType.PDF
+                else -> CommunityPostViewModelInStates.FileType.OTHER
+            }
+            viewModel.init(
+                CommunityPostViewModelInStates.SetAttachment(
+                    it, getFileName(it), fileType
+                )
+            )
+            applyAttachments(fileType)
+        }
+    }
+
+    private fun applyImages() {
+        binding.included.attachmentWindow.apply {
+            viewModel.attachmentUri.observe(viewLifecycleOwner) {
+                if (it == null) {
+                    binding.included.attachmentExpandableLayout.collapse()
+
+                } else {
+                    imageView2.setImageURI(it)
+                    binding.included.attachmentExpandableLayout.expand()
+                }
+            }
+            viewModel.fileName.observe(viewLifecycleOwner) {
+                textView.text = it.toString()
+            }
+        }
+    }
+
+    private fun applyAttachments(fileType: CommunityPostViewModelInStates.FileType) {
+        when (fileType) {
+            CommunityPostViewModelInStates.FileType.IMAGE -> applyImages()
+            CommunityPostViewModelInStates.FileType.PDF -> {}
+            CommunityPostViewModelInStates.FileType.OTHER -> return
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,6 +108,8 @@ class CommunityPostFragment : Fragment(
         }
         viewModel.getCommunityPosts(args.community).observe(viewLifecycleOwner) {
             adapter.submitList(it)
+            binding.postRecyclerView.smoothScrollToPosition(it.size - 1)
+
         }
         binding.included.voiceRecordingOrSend.setOnClickListener {
             viewModel.init(
@@ -65,6 +123,8 @@ class CommunityPostFragment : Fragment(
             viewModel.events.collect {
                 when (it) {
                     CommunityPostViewModelOutStates.MessageSendSuccessfully -> {
+                        binding.included.attachmentWindow.progressLoading.visibility =
+                            View.INVISIBLE
                         binding.apply {
                             included.messageInput.setText("");
                         }
@@ -74,8 +134,26 @@ class CommunityPostFragment : Fragment(
                         makeShortToast(it.message)
 
                     }
+                    CommunityPostViewModelOutStates.ShowImageUploading -> {
+                        binding.included.attachmentWindow.progressLoading.visibility = View.VISIBLE
+                    }
+                    CommunityPostViewModelOutStates.ShowLoading -> {
+
+                    }
                 }
             }
+        }
+        binding.included.takePicture.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                getTmpFileUri().let { uri ->
+                    val fileName = getFileName(uri)
+                    takeImageResult.launch(uri)
+                    viewModel.init(CommunityPostViewModelInStates.SetImageUri(uri, fileName))
+                }
+            }
+        }
+        binding.included.addAttachment.setOnClickListener {
+            chooserLauncher.launch("*/*")
         }
         setHasOptionsMenu(true)
     }

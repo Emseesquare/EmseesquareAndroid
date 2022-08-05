@@ -81,4 +81,5 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
     implementation("io.coil-kt:coil:2.1.0")
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+    implementation 'com.github.cachapa:ExpandableLayout:2.9.2'
 }

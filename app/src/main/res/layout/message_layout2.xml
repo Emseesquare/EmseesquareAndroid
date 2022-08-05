@@ -10,8 +10,8 @@
         android:id="@+id/cardView"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        app:cardCornerRadius="999dp"
         android:layout_marginEnd="8dp"
+        app:cardCornerRadius="999dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -33,6 +33,12 @@
         app:layout_constraintBottom_toBottomOf="@+id/cardView"
         app:layout_constraintEnd_toStartOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/chatMessage"
