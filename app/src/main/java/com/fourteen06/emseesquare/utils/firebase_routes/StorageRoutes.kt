@@ -13,5 +13,8 @@ object StorageRoutes {
         MESSAGE_COLLECTION_STORAGE + "/${roomId}/${fileName}"
 
     fun GET_COMMUNITY_ATTACHMENT_STORAGE_URL(communityId: String, fileName: String?) =
-        COMMUNITY_COLLECTION_STORAGE + "/${communityId}/${fileName}"
+        COMMUNITY_COLLECTION_STORAGE + "/${communityId}/postAttachments/${fileName}"
+
+    fun GET_COMMUNITY_THUMBNAILS_STORAGE_URL(communityId: String) =
+        COMMUNITY_COLLECTION_STORAGE + "/${communityId}/thumbnails/thumbnail"
 }

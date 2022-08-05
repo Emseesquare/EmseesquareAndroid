@@ -22,6 +22,7 @@ import com.fourteen06.emseesquare.utils.getMimeType
 import com.fourteen06.emseesquare.utils.getTmpFileUri
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Integer.max
 
 
 @AndroidEntryPoint
@@ -108,7 +109,7 @@ class CommunityPostFragment : Fragment(
         }
         viewModel.getCommunityPosts(args.community).observe(viewLifecycleOwner) {
             adapter.submitList(it)
-            binding.postRecyclerView.smoothScrollToPosition(it.size - 1)
+            binding.postRecyclerView.smoothScrollToPosition(max(0, it.size - 1))
 
         }
         binding.included.voiceRecordingOrSend.setOnClickListener {

@@ -46,7 +46,7 @@
         <item name="android:hint">@string/phone_number_edit_text_hint</item>
         <item name="boxStrokeColor">@color/green_500</item>
         <item name="hintTextColor">@color/green_500</item>
-    <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textCursorDrawable">@null</item>
         <item name="prefixText">+91-</item>
     </style>
 
@@ -73,14 +73,20 @@
         <item name="android:textCursorDrawable">@null</item>
         <item name="hintTextColor">@color/green_500</item>
     </style>
+
     <style name="App.User.Username" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">@dimen/app_member_name_font_size</item>
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="App.User.Info" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">@dimen/app_member_info_font_size</item>
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/black35</item>
+    </style>
+
+    <style name="App.Toolbar.Style" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="titleTextColor">@color/titleColor</item>
     </style>
 </resources>
