@@ -24,7 +24,9 @@ class FileUploadUseCase @Inject constructor(
     operator fun invoke(
         file: Uri,
         storageLocation: String,
-        exclusiveFile: ExclusiveFile = ExclusiveFile.ALL
+        exclusiveFile: ExclusiveFile = ExclusiveFile.ALL,
+        thumbnailUri: Uri? = null,
+        thumbnailStorageLocation: String? = null
     ): Flow<Resource<AttachmentType>> =
         flow {
             emit(Resource.Loading())
@@ -38,14 +40,25 @@ class FileUploadUseCase @Inject constructor(
                     else -> throw IllegalStateException(applicationContext.getString(R.string.invalid_file_type))
                 }
                 val ref = firebaseStorage.getReference(storageLocation)
+                var thumbnailDownloadUrl: Uri? = null
 
                 when (exclusiveFile) {
                     ExclusiveFile.ALL -> {
                         ref.putFile(file).await()
+                        if (thumbnailUri != null && thumbnailStorageLocation != null) {
+                            val thumbnailRef =
+                                firebaseStorage.getReference(thumbnailStorageLocation)
+                            thumbnailRef.putFile(thumbnailUri).await()
+                            thumbnailDownloadUrl = thumbnailRef.downloadUrl.await()
+                        }
                     }
                     ExclusiveFile.PDF_ONLY -> {
                         if (!isImage) {
                             ref.putFile(file).await()
+                            val thumbnailRef =
+                                firebaseStorage.getReference(thumbnailStorageLocation!!)
+                            thumbnailRef.putFile(thumbnailUri!!).await()
+                            thumbnailDownloadUrl = thumbnailRef.downloadUrl.await()
                         } else {
                             throw  IllegalStateException("Only Pdf files are acceptable.")
                         }
@@ -59,10 +72,14 @@ class FileUploadUseCase @Inject constructor(
                     }
                 }
                 val downloadUrl = ref.downloadUrl.await()
-                val attachmentType=if(isImage){
+
+                val attachmentType = if (isImage) {
                     AttachmentType.Image(imageUrl = downloadUrl.toString())
-                }else{
-                    AttachmentType.File(fileUrl = downloadUrl.toString())
+                } else {
+                    AttachmentType.File(
+                        fileUrl = downloadUrl.toString(),
+                        thumbnail = thumbnailDownloadUrl?.toString() ?: ""
+                    )
                 }
                 emit(Resource.Success(attachmentType))
             } catch (e: FirebaseException) {

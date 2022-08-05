@@ -18,8 +18,10 @@ data class MessageModel(
             MESSAGE to message,
             TIME to time,
             ATTACHMENT_URL to attachmentType.toURL(),
-            ATTACHMENT_TYPE to attachmentType.toType()
-        )
+            ATTACHMENT_TYPE to attachmentType.toType(),
+            THUMBNAIL_URL to attachmentType.toThumbnailURL(),
+
+            )
     }
 
     companion object Factory {
@@ -30,7 +32,10 @@ data class MessageModel(
                     AttachmentType.Image(imageUrl = dataMap[ATTACHMENT_URL] as String)
                 }
                 2L -> {
-                    AttachmentType.File(fileUrl = dataMap[ATTACHMENT_URL] as String)
+                    AttachmentType.File(
+                        fileUrl = dataMap[ATTACHMENT_URL] as String,
+                        thumbnail = dataMap[THUMBNAIL_URL] as String
+                    )
                 }
                 else -> {
                     AttachmentType.None
@@ -52,6 +57,7 @@ data class MessageModel(
         const val TIME = "time"
         const val ATTACHMENT_URL = "attachmentUrl"
         const val ATTACHMENT_TYPE = "attachmentType"
+        const val THUMBNAIL_URL = "thumbnailUrl"
 
     }
 }

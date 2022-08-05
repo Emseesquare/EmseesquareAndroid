@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fourteen06.emseesquare.R
+import com.fourteen06.emseesquare.controller.DrawerController
 
 open class MultistackBaseFragment(
     @LayoutRes val contentLayoutId: Int,
@@ -37,6 +38,12 @@ open class MultistackBaseFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (isTopLevelFragment) {
+            (parentFragment!!.parentFragment!!.parentFragment!! as DrawerController).unlockDrawer()
+        } else {
+            (parentFragment!!.parentFragment!!.parentFragment!! as DrawerController).lockDrawer()
+
+        }
         (activity as AppCompatActivity).apply {
             if (this@MultistackBaseFragment.titleRes != null) {
 
@@ -78,8 +85,7 @@ open class MultistackBaseFragment(
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             if (isTopLevelFragment) {
-                //act as menu button
-
+                (parentFragment!!.parentFragment!!.parentFragment!! as DrawerController).openDrawer()
             } else {
                 //act as backbutton
                 findChildNavController().popBackStack()

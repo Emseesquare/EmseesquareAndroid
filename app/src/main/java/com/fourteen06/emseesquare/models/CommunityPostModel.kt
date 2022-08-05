@@ -43,7 +43,10 @@ data class CommunityPostModel(
                         AttachmentType.Image(imageUrl = dataMap[MessageModel.ATTACHMENT_URL] as String)
                     }
                     2L -> {
-                        AttachmentType.File(fileUrl = dataMap[MessageModel.ATTACHMENT_URL] as String)
+                        AttachmentType.File(
+                            fileUrl = dataMap[ATTACHMENT_URL] as String,
+                            thumbnail = dataMap[THUMBNAIL_URL] as String
+                        )
                     }
                     else -> {
                         AttachmentType.None
@@ -66,6 +69,8 @@ data class CommunityPostModel(
         const val USER = "user"
         const val ATTACHMENT_URL = "attachmentUrl"
         const val REACTIONS = "reactions"
+        const val THUMBNAIL_URL = "thumbnailUrl"
+
     }
 }
 

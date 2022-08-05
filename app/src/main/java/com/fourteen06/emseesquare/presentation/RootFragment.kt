@@ -2,22 +2,21 @@ package com.fourteen06.emseesquare.presentation
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.fragment.findNavController
 import com.fourteen06.emseesquare.R
+import com.fourteen06.emseesquare.controller.DrawerController
 import com.fourteen06.emseesquare.databinding.FragmentRootBinding
 import com.fourteen06.emseesquare.utils.FragmentStackHostFragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RootFragment : Fragment(R.layout.fragment_root) {
-    private lateinit var drawerToggle: ActionBarDrawerToggle
+class RootFragment : Fragment(R.layout.fragment_root), DrawerController {
+    private var drawerLockStatus = false
     private val binding by viewBinding(FragmentRootBinding::bind)
-
     private lateinit var homeFragmentHost: FragmentStackHostFragment
     private lateinit var messageFragmentHost: FragmentStackHostFragment
     private lateinit var communityFragmentHost: FragmentStackHostFragment
@@ -59,7 +58,7 @@ class RootFragment : Fragment(R.layout.fragment_root) {
 
         } else {
             selectedIndex = savedInstanceState.getInt(SELECTED_INDEX, 0)
-
+            drawerLockStatus = savedInstanceState.getBoolean(DRAWER_LOCK_STATUS)
             homeFragmentHost =
                 childFragmentManager.findFragmentByTag(HOME_FRAGMENT) as FragmentStackHostFragment
             messageFragmentHost =
@@ -107,6 +106,7 @@ class RootFragment : Fragment(R.layout.fragment_root) {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(SELECTED_INDEX, selectedIndex)
+        outState.putBoolean(DRAWER_LOCK_STATUS, drawerLockStatus)
     }
 
     private fun FragmentTransaction.selectFragment(selectedIndex: Int): FragmentTransaction {
@@ -130,6 +130,22 @@ class RootFragment : Fragment(R.layout.fragment_root) {
             .commit()
 
     }
+
+    override fun lockDrawer() {
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+    override fun unlockDrawer() {
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+
+    override fun openDrawer() {
+        binding.drawerLayout.open()
+    }
+
+    override fun closeDrawer() {
+        binding.drawerLayout.close()
+    }
 }
 
 
@@ -138,3 +154,4 @@ private const val HOME_FRAGMENT = "HOME_FRAGMENT"
 private const val MESSAGE_FRAGMENT = "MESSAGE_FRAGMENT"
 private const val COMMUNITY_FRAGMENT = "COMMUNITY_FRAGMENT"
 private const val PROFILE_FRAGMENT = "PROFILE_FRAGMENT"
+private const val DRAWER_LOCK_STATUS = "DRAWER_LOCK_STATUS"

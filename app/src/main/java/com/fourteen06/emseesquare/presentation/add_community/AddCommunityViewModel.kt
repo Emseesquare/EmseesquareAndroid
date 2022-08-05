@@ -84,7 +84,7 @@ class AddCommunityViewModel @Inject constructor(
     private suspend fun uploadFile(viewModelInStates: AddCommunityViewModelInStates.UploadFileButtonClicked) {
         fileUploadUseCase(
             viewModelInStates.uri,
-            "${StorageRoutes.COMMUNITY_COLLECTION_STORAGE}/$communityUid",
+            "${StorageRoutes.GET_COMMUNITY_THUMBNAILS_STORAGE_URL(communityUid)}",
             exclusiveFile = FileUploadUseCase.Companion.ExclusiveFile.IMAGE_ONLY
         ).collect {
             when (it) {

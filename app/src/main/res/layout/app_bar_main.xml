@@ -17,7 +17,7 @@
             android:layout_height="?attr/actionBarSize"
             android:textFontWeight="200"
             app:popupTheme="@style/Theme.Emseesquare.PopupOverlay"
-            app:titleTextColor="@color/titleColor" />
+            />
 
     </com.google.android.material.appbar.AppBarLayout>
 
