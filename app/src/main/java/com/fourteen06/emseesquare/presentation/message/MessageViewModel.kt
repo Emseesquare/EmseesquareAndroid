@@ -42,7 +42,7 @@ class MessageViewModel @Inject constructor(
         when (inStates) {
             is MessageViewmodelInStates.MakeNewChatRoom -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    addNewMessageRoomUseCase(inStates.userId).collect {
+                    addNewMessageRoomUseCase(inStates.user).collect {
                         when (it) {
                             is Resource.Error -> {
                                 eventChannel.send(MessageViewmodelOutStates.MakeToast(it.message))

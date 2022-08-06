@@ -20,7 +20,6 @@ import com.fourteen06.emseesquare.utils.Resource
 import com.fourteen06.emseesquare.utils.onQueryTextChanged
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.orhanobut.logger.Logger
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -42,7 +41,7 @@ class MessageFragment : MultistackBaseFragment(
 ) {
     private val binding by viewBinding(FragmentMessageBinding::bind)
     val searchAdapter = UserMessageRoomInviteAdapter {
-        viewModel.init(MessageViewmodelInStates.MakeNewChatRoom(it.uid))
+        viewModel.init(MessageViewmodelInStates.MakeNewChatRoom(it))
     }
     val messageAdapter = MessageAdapter(Firebase.auth.currentUser?.uid.toString()) {
         sendUserToChatRoom(it)
@@ -84,8 +83,8 @@ class MessageFragment : MultistackBaseFragment(
         viewModel.messageRoomFlow.observe(viewLifecycleOwner) {
             messageAdapter.submitList(it)
         }
-        viewModel.events.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.events.observe(viewLifecycleOwner) {
+            when (it) {
                 MessageViewmodelOutStates.Uninitialized -> {
 
                 }
