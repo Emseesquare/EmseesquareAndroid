@@ -2,7 +2,7 @@ package com.fourteen06.emseesquare.models
 
 import android.os.Parcelable
 import com.google.firebase.Timestamp
-import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
@@ -13,7 +13,7 @@ data class MessageRoom(
     val lastMessage: String?,
     val lastMessageTimestamp: Date,
     val roomOnline: Boolean
-) :Parcelable{
+) : Parcelable {
     fun toHashMap(): HashMap<String, *> {
         return hashMapOf(
             MESSAGE_ROOM_ID to messageRoomId,
@@ -33,8 +33,8 @@ data class MessageRoom(
     }
 
     companion object Factory {
-        suspend fun QueryDocumentSnapshot.toMessageRoom(getUser: suspend (userId: String) -> User): MessageRoom {
-            val dataMap = this.data
+        suspend fun DocumentSnapshot.toMessageRoom(getUser: suspend (userId: String) -> User): MessageRoom {
+            val dataMap = this.data!!
             val userIdList = dataMap[PARTICIPANTS] as List<*>
             val users = mutableListOf<User>().also {
                 for (i in userIdList) {

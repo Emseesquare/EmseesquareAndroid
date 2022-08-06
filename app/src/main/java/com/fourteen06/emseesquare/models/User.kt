@@ -76,6 +76,21 @@ data class User(
             }
         }
 
+        fun DocumentSnapshot.toMessageRefsId(): Map<String, String> {
+            val dataMap = this.data
+            if (dataMap != null) {
+                val messageContactMap = dataMap[MESSAGE_ROOM_REFS] as Map<*, *>?
+                if (messageContactMap.isNullOrEmpty()) return emptyMap()
+                return messageContactMap.map { (key, value) ->
+                    key.toString() to value.toString()
+                }.toMap()
+
+            } else {
+                throw IllegalStateException("Datamap is null")
+            }
+        }
+
+
         const val UID = "uid"
         const val ID = "id"
         const val NAME = "name"
@@ -84,6 +99,7 @@ data class User(
         const val ROLE = "role"
         const val INSTITUTE_ID = "instituteId"
         const val COMMUNITY_REFS = "communityRefs"
+        const val MESSAGE_ROOM_REFS = "messageRoomsRefs"
     }
 }
 
