@@ -41,7 +41,7 @@ class MessageFragment : MultistackBaseFragment(
 ) {
     private val binding by viewBinding(FragmentMessageBinding::bind)
 
-    val searchAdapter = UserMessageRoomInviteAdapter {
+    val searchAdapter = UserAdapter {
         viewModel.init(MessageViewmodelInStates.MakeNewChatRoom(it))
 
     }
