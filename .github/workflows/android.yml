@@ -21,11 +21,7 @@ jobs:
           node-version: 14.18.0
       - uses: actions/setup-node@v2
         with:
-            node-version: '14'
-      - name: Run prettier
-        run: |
-            npm ci
-            npm run prettier-check
+          node-version: '14'
       - run: npm ci
       - run: npm test
       - name: build debug
