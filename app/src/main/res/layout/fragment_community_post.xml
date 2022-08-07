@@ -21,6 +21,7 @@
             app:titleTextColor="@color/titleColor">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/communityProfileBar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
@@ -29,41 +30,16 @@
                 android:gravity="center|start">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView6"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:layout_marginStart="-8dp"
-                    app:cardCornerRadius="999dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/cardView5"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:foreground="@color/black35"
-                        android:src="@drawable/man_photo_placeholder" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="99"
-                        android:textColor="@color/white_"
-                        android:textSize="16dp" />
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
                     android:id="@+id/cardView5"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
-                    app:cardCornerRadius="999dp"
+                    app:cardCornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
+                        android:id="@+id/communityAvatar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/man_photo_placeholder" />
@@ -76,8 +52,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:textColor="@color/titleColor"
                     app:layout_constraintBottom_toBottomOf="@+id/cardView5"
-                    app:layout_constraintStart_toEndOf="@+id/cardView6"
+                    app:layout_constraintStart_toEndOf="@+id/cardView5"
                     app:layout_constraintTop_toTopOf="@+id/cardView5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

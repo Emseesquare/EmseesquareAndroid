@@ -40,8 +40,10 @@ class MessageFragment : MultistackBaseFragment(
     null
 ) {
     private val binding by viewBinding(FragmentMessageBinding::bind)
+
     val searchAdapter = UserMessageRoomInviteAdapter {
         viewModel.init(MessageViewmodelInStates.MakeNewChatRoom(it))
+
     }
     val messageAdapter = MessageAdapter(Firebase.auth.currentUser?.uid.toString()) {
         sendUserToChatRoom(it)

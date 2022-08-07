@@ -10,10 +10,10 @@ import com.fourteen06.emseesquare.databinding.MessageRecyclerViewLayoutBinding
 import com.fourteen06.emseesquare.models.User
 import com.fourteen06.emseesquare.utils.loadProfileImage
 
-class UserMessageRoomInviteAdapter(
+class UserAdapter(
     private val onClick: (User) -> Unit
 ) :
-    ListAdapter<User, UserMessageRoomInviteAdapter.ViewHolder>(CustomDiffUtil()) {
+    ListAdapter<User, UserAdapter.ViewHolder>(CustomDiffUtil()) {
     inner class ViewHolder(val binding: MessageRecyclerViewLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
