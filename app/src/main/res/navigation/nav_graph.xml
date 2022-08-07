@@ -71,5 +71,16 @@
         <argument
             android:name="community"
             app:argType="com.fourteen06.emseesquare.models.CommunityModel" />
+        <action
+            android:id="@+id/action_communityPostFragment_to_communityInfoFragment"
+            app:destination="@id/communityInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/communityInfoFragment"
+        android:name="com.fourteen06.emseesquare.presentation.community_info.CommunityInfoFragment"
+        android:label="CommunityInfoFragment" >
+        <argument
+            android:name="community"
+            app:argType="com.fourteen06.emseesquare.models.CommunityModel" />
     </fragment>
 </navigation>

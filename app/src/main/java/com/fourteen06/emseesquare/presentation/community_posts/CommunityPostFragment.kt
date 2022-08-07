@@ -20,7 +20,7 @@ import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
 import com.fourteen06.emseesquare.utils.getFileName
 import com.fourteen06.emseesquare.utils.getMimeType
 import com.fourteen06.emseesquare.utils.getTmpFileUri
-import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import com.fourteen06.emseesquare.utils.load
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Integer.max
 
@@ -30,7 +30,7 @@ class CommunityPostFragment : Fragment(
     R.layout.fragment_community_post,
 ) {
     private val args by navArgs<CommunityPostFragmentArgs>()
-    private val binding by viewBinding(FragmentCommunityPostBinding::bind)
+    private lateinit var binding: FragmentCommunityPostBinding
     private val viewModel by viewModels<CommunityPostViewModel>()
     private val adapter = CommunityPostAdapter()
     private val takeImageResult =
@@ -89,6 +89,7 @@ class CommunityPostFragment : Fragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentCommunityPostBinding.bind(view)
         if (savedInstanceState != null) {
             this.binding.included.messageInput.setText(
                 savedInstanceState.getString(
@@ -101,6 +102,7 @@ class CommunityPostFragment : Fragment(
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowTitleEnabled(false)
         }
+        binding.communityAvatar.load(args.community.communityImage)
         binding.title.text = (args.community.communityName)
         binding.postRecyclerView.apply {
             adapter = this@CommunityPostFragment.adapter
@@ -155,6 +157,13 @@ class CommunityPostFragment : Fragment(
         }
         binding.included.addAttachment.setOnClickListener {
             chooserLauncher.launch("*/*")
+        }
+        binding.communityProfileBar.setOnClickListener {
+            findNavController().navigate(
+                CommunityPostFragmentDirections.actionCommunityPostFragmentToCommunityInfoFragment(
+                    args.community
+                )
+            )
         }
         setHasOptionsMenu(true)
     }
