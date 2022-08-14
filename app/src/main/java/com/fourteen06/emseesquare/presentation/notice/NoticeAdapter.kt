@@ -13,6 +13,7 @@ import com.fourteen06.emseesquare.models.NoticeModel
 import com.fourteen06.emseesquare.utils.UnixToHuman.getTimeAgo
 import com.fourteen06.emseesquare.utils.load
 import com.fourteen06.emseesquare.utils.loadProfileImage
+import com.stfalcon.imageviewer.StfalconImageViewer
 
 
 class NoticeAdapter :
@@ -34,6 +35,15 @@ class NoticeAdapter :
                 when (notice.attachmentType) {
                     is AttachmentType.Image -> {
                         contentImage.load(notice.attachmentType.imageUrl)
+                        imageHolderCardView.setOnClickListener {
+                            StfalconImageViewer.Builder<String>(
+                                itemView.context,
+                                arrayOf(notice.attachmentType.imageUrl)
+                            ) { imageView, url ->
+                                imageView.load(url, false)
+                            }.withTransitionFrom(binding.contentImage).withHiddenStatusBar(false)
+                                .show()
+                        }
                     }
                     AttachmentType.None -> {
                         imageHolderCardView.visibility = View.GONE

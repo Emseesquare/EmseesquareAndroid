@@ -82,4 +82,5 @@ dependencies {
     implementation("io.coil-kt:coil:2.1.0")
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation 'com.github.cachapa:ExpandableLayout:2.9.2'
+    implementation 'com.github.stfalcon-studio:StfalconImageViewer:v1.0.1'
 }

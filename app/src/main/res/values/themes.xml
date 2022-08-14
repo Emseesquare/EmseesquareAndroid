@@ -16,5 +16,14 @@
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/App.Toolbar.Style</item>
 
+
+    </style>
+
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen_background</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/black</item>
+
+
     </style>
 </resources>

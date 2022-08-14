@@ -37,6 +37,8 @@
         <entry key="app/src/main/res/drawable/notice_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/reaction_background.xml" value="0.2905" />
         <entry key="app/src/main/res/drawable/search_view_color_selector.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/splash_screen_background.xml" value="0.15" />
+        <entry key="app/src/main/res/drawable/splash_screen_background_logo.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_multistack.xml" value="0.35885416666666664" />
@@ -69,7 +71,7 @@
         <entry key="app/src/main/res/layout/message_layout1.xml" value="0.5" />
         <entry key="app/src/main/res/layout/message_layout2.xml" value="0.33" />
         <entry key="app/src/main/res/layout/message_recycler_view_layout.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/notice_view.xml" value="0.47249647390691113" />
+        <entry key="app/src/main/res/layout/notice_view.xml" value="0.1" />
         <entry key="app/src/main/res/layout/root_fragment.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/stack_host_fragment.xml" value="0.18333333333333332" />
         <entry key="app/src/main/res/layout/user_info_recycler_view_element.xml" value="0.67" />
