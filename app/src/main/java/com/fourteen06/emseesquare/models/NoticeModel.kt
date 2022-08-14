@@ -8,7 +8,7 @@ data class NoticeModel(
     val id: String = "",
     val time: Date,
     val content: String = "",
-    val pins: Int = 0,
+    val pins: Long,
     val attachmentType: AttachmentType = AttachmentType.None,
     val user: User? = null
 ) {
@@ -49,7 +49,8 @@ data class NoticeModel(
                 content = dataMap[CONTENT].toString(),
                 time = (dataMap[TIME] as Timestamp).toDate(),
                 attachmentType = attachmentType,
-                user = user
+                user = user,
+                pins = dataMap[PINS] as Long
             )
         }
 

@@ -100,6 +100,7 @@ data class User(
         const val INSTITUTE_ID = "instituteId"
         const val COMMUNITY_REFS = "communityRefs"
         const val MESSAGE_ROOM_REFS = "messageRoomsRefs"
+        const val PINNED_NOTICES_REF = "ref"
     }
 }
 

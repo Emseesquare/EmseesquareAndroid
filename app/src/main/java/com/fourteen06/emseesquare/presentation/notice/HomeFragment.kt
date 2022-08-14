@@ -3,11 +3,13 @@ package com.fourteen06.emseesquare.presentation.notice
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.FragmentHomeBinding
 import com.fourteen06.emseesquare.repository.notice.AddNoticeUseCase
+import com.fourteen06.emseesquare.utils.AlertExt.makeShortToast
 import com.fourteen06.emseesquare.utils.MultistackBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,7 +36,9 @@ class HomeFragment : MultistackBaseFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
-        noticeAdapter = NoticeAdapter()
+        noticeAdapter = NoticeAdapter { noticeId ->
+            viewModel.init(HomeInState.ChangeLikeStatus(noticeId))
+        }
         noticeAdapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         linearLayoutManager = LinearLayoutManager(requireContext())
@@ -45,38 +49,19 @@ class HomeFragment : MultistackBaseFragment(
             this.adapter = noticeAdapter
             this.layoutManager = linearLayoutManager
             setHasFixedSize(true)
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    val lastVisible = linearLayoutManager.findLastVisibleItemPosition() + 1
-                    if (viewModel.lastVisibleItem.value < lastVisible) {
-                        viewModel.lastVisibleItem.value = lastVisible
-                    }
-                }
-            })
         }
 
-        viewModel.notices.observe(viewLifecycleOwner){
-                noticeAdapter.submitList(it)
+        viewModel.notices.observe(viewLifecycleOwner) {
+            noticeAdapter.submitList(it)
+        }
+        viewModel.events.asLiveData().observe(viewLifecycleOwner) {
+            when (it) {
+                is HomeOutState.MakeToast -> makeShortToast(it.message)
+            }
         }
     }
 
     private fun sendUserToAddNotice() {
         findChildNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddNotice())
     }
-
-//    private fun setupDrawerLayout() {
-////        drawerToggle = ActionBarDrawerToggle(
-////            requireActivity(),
-////            binding.drawerLayout,
-////            R.string.open,
-////            R.string.close
-////        )
-////        binding.drawerLayout.setDrawerListener(drawerToggle);
-////        drawerToggle.syncState()
-////        if (drawerToggle.onOptionsItemSelected(item)) {
-////            binding.drawerLayout.open()
-////            return true
-////        }
-//    }
 }

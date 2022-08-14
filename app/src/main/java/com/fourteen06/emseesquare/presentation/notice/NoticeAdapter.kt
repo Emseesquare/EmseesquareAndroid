@@ -16,7 +16,7 @@ import com.fourteen06.emseesquare.utils.loadProfileImage
 import com.stfalcon.imageviewer.StfalconImageViewer
 
 
-class NoticeAdapter :
+class NoticeAdapter(private val onPinNotice: (noticeId: String) -> Unit) :
     ListAdapter<NoticeModel, NoticeAdapter.ViewHolder>(CustomDiffUtil()) {
     inner class ViewHolder(val binding: NoticeViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -32,6 +32,10 @@ class NoticeAdapter :
                 userSubtitle.text = spannable
                 noticeDescription.text = notice.content
                 userAvatarImageView.loadProfileImage(notice.user?.profileImageUrl)
+                pinsTextView.text = notice.pins.toString()
+                pinImageView.setOnClickListener {
+                    onPinNotice(notice.id)
+                }
                 when (notice.attachmentType) {
                     is AttachmentType.Image -> {
                         contentImage.load(notice.attachmentType.imageUrl)
