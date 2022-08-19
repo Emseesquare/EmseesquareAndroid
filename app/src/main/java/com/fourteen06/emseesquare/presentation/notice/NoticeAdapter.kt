@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.fourteen06.emseesquare.R
 import com.fourteen06.emseesquare.databinding.NoticeViewBinding
 import com.fourteen06.emseesquare.models.AttachmentType
 import com.fourteen06.emseesquare.models.NoticeModel
@@ -16,7 +17,7 @@ import com.fourteen06.emseesquare.utils.loadProfileImage
 import com.stfalcon.imageviewer.StfalconImageViewer
 
 
-class NoticeAdapter(private val onPinNotice: (noticeId: String) -> Unit) :
+class NoticeAdapter(private val onPinNotice: (noticeId: String, noticeTime: Long) -> Unit) :
     ListAdapter<NoticeModel, NoticeAdapter.ViewHolder>(CustomDiffUtil()) {
     inner class ViewHolder(val binding: NoticeViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -34,7 +35,7 @@ class NoticeAdapter(private val onPinNotice: (noticeId: String) -> Unit) :
                 userAvatarImageView.loadProfileImage(notice.user?.profileImageUrl)
                 pinsTextView.text = notice.pins.toString()
                 pinImageView.setOnClickListener {
-                    onPinNotice(notice.id)
+                    onPinNotice(notice.id, notice.time.time)
                 }
                 when (notice.attachmentType) {
                     is AttachmentType.Image -> {
@@ -56,6 +57,7 @@ class NoticeAdapter(private val onPinNotice: (noticeId: String) -> Unit) :
 
                     }
                 }
+                pinImageView.setImageDrawable(itemView.context.getDrawable(if (notice.isPinned) R.drawable.ic_pin_filled else R.drawable.ic_pin_outlined))
             }
         }
     }

@@ -10,7 +10,8 @@ data class NoticeModel(
     val content: String = "",
     val pins: Long,
     val attachmentType: AttachmentType = AttachmentType.None,
-    val user: User? = null
+    val user: User? = null,
+    var isPinned: Boolean = false
 ) {
     fun toHashMap(): HashMap<String, *> {
         return hashMapOf(
