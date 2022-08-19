@@ -17,7 +17,7 @@ import com.fourteen06.emseesquare.utils.loadProfileImage
 import com.stfalcon.imageviewer.StfalconImageViewer
 
 
-class NoticeAdapter(private val onPinNotice: (noticeId: String, noticeTime: Long) -> Unit) :
+class NoticeAdapter(private val onPinNotice: (noticeId: String, noticeTime: Long, isLiked: Boolean) -> Unit) :
     ListAdapter<NoticeModel, NoticeAdapter.ViewHolder>(CustomDiffUtil()) {
     inner class ViewHolder(val binding: NoticeViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -35,7 +35,14 @@ class NoticeAdapter(private val onPinNotice: (noticeId: String, noticeTime: Long
                 userAvatarImageView.loadProfileImage(notice.user?.profileImageUrl)
                 pinsTextView.text = notice.pins.toString()
                 pinImageView.setOnClickListener {
-                    onPinNotice(notice.id, notice.time.time)
+                    onPinNotice(notice.id, notice.time.time, !notice.isPinned)
+                    if (notice.isPinned) {
+                        pinImageView.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_pin_outlined))
+
+                    } else {
+                        pinImageView.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_pin_filled))
+
+                    }
                 }
                 when (notice.attachmentType) {
                     is AttachmentType.Image -> {

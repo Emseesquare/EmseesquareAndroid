@@ -16,18 +16,29 @@ class PinNoticeUseCase @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val auth: FirebaseAuth
 ) {
-    suspend operator fun invoke(noticeId: String, noticeTime: Long): Resource<Unit> {
+    suspend operator fun invoke(
+        noticeId: String,
+        noticeTime: Long,
+        isLiked: Boolean
+    ): Resource<Unit> {
         return try {
             val noticeRef = FirestoreRoute.GET_NOTICE_FROM_NOTICE_ID(noticeId)
             firestore.document(noticeRef)
-                .update(NoticeModel.PINS, FieldValue.increment(1)).await()
+                .update(
+                    NoticeModel.PINS,
+                    if (isLiked) FieldValue.increment(1) else FieldValue.increment(-1)
+                ).await()
             val userRef =
                 FirestoreRoute.GET_NOTICES_PINNED_FROM_UID(auth.currentUser?.uid.toString())
-            firestore.collection(userRef).document(noticeId).set(
-                mutableMapOf<String, Any>(
-                    User.PINNED_NOTICE_TIMESTAMP to noticeTime
-                )
-            ).await()
+            if (isLiked) {
+                firestore.collection(userRef).document(noticeId).set(
+                    mutableMapOf<String, Any>(
+                        User.PINNED_NOTICE_TIMESTAMP to noticeTime
+                    )
+                ).await()
+            } else {
+                firestore.collection(userRef).document(noticeId).delete().await()
+            }
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(e.message.toString())

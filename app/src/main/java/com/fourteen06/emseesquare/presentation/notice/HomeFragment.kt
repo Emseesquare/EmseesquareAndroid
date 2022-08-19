@@ -36,8 +36,8 @@ class HomeFragment : MultistackBaseFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
-        noticeAdapter = NoticeAdapter { noticeId, time ->
-            viewModel.init(HomeInState.ChangeLikeStatus(noticeId, time))
+        noticeAdapter = NoticeAdapter { noticeId, time, isLiked ->
+            viewModel.init(HomeInState.ChangeLikeStatus(noticeId, time, isLiked))
         }
         noticeAdapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY

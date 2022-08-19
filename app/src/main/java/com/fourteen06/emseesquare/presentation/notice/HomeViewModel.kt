@@ -29,7 +29,8 @@ class HomeViewModel @Inject constructor(
         when (val inState = homeInState) {
             is HomeInState.ChangeLikeStatus -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    when (val response = pinNoticeUseCase(inState.noticeId, inState.noticeTime)) {
+                    when (val response =
+                        pinNoticeUseCase(inState.noticeId, inState.noticeTime, inState.isLiked)) {
                         is Resource.Error -> {
                             eventFlow.send(HomeOutState.MakeToast(response.message))
                         }
@@ -48,7 +49,8 @@ class HomeViewModel @Inject constructor(
 }
 
 sealed class HomeInState {
-    data class ChangeLikeStatus(val noticeId: String, val noticeTime: Long) : HomeInState()
+    data class ChangeLikeStatus(val noticeId: String, val noticeTime: Long, val isLiked: Boolean) :
+        HomeInState()
 }
 
 sealed class HomeOutState {
