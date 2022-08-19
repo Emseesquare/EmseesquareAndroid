@@ -77,5 +77,25 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="4dp"
         android:layout_marginBottom="4dp"
+        android:visibility="gone"
         tools:layout_editor_absoluteY="583dp" />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/join_community_expandable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_"
+        android:paddingBottom="12dp"
+        app:el_duration="1000"
+        app:el_expanded="true"
+        app:el_parallax="0">
+
+        <Button
+            android:id="@+id/join_community_button"
+            style="@style/App.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:text="Join This Community" />
+    </net.cachapa.expandablelayout.ExpandableLayout>
 </LinearLayout>

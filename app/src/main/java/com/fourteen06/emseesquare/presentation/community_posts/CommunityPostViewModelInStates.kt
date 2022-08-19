@@ -12,6 +12,8 @@ sealed class CommunityPostViewModelInStates {
     data class SetAttachment(val uri: Uri?, val fileName: String?, val fileType: FileType) :
         CommunityPostViewModelInStates()
 
+    object EnrolledCommunity : CommunityPostViewModelInStates()
+    object UnenrolledCommunity : CommunityPostViewModelInStates()
     enum class FileType {
         IMAGE, PDF, OTHER
     }

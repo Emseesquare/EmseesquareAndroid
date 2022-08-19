@@ -23,6 +23,7 @@ class CommunityViewModel @Inject constructor(
         }
     }
     val communityLiveData = flow.asLiveData()
+    val isEnrolledCommunities = searchQuery.value.isNullOrBlank()
     fun init(inState: CommunityViewModelInState) {
         when (inState) {
             is CommunityViewModelInState.SearchForCommunity -> {

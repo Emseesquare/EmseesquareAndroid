@@ -11,7 +11,6 @@ import com.fourteen06.emseesquare.repository.community.GetCommunityPostUseCase
 import com.fourteen06.emseesquare.repository.utils.FileUploadUseCase
 import com.fourteen06.emseesquare.utils.Resource
 import com.fourteen06.emseesquare.utils.firebase_routes.StorageRoutes
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +24,6 @@ class CommunityPostViewModel @Inject constructor(
     private val addCommunityPostUseCase: AddCommunityPostUseCase,
     private val getCommunityPostUseCase: GetCommunityPostUseCase,
     private val fileUploadUseCase: FileUploadUseCase,
-    private val firebaseAuth: FirebaseAuth,
     @ApplicationContext
     private val applicationContext: Context
 ) : ViewModel() {
@@ -43,6 +41,10 @@ class CommunityPostViewModel @Inject constructor(
     private val _isImage = MutableLiveData<Boolean>(true)
     val isImage: LiveData<Boolean>
         get() = _isImage
+
+    private val _isEnrolled = MutableLiveData(false)
+    val isEnrolled: LiveData<Boolean>
+        get() = _isEnrolled
 
     fun init(inStates: CommunityPostViewModelInStates) {
         when (inStates) {
@@ -114,6 +116,12 @@ class CommunityPostViewModel @Inject constructor(
                     }
                 }
 
+            }
+            CommunityPostViewModelInStates.EnrolledCommunity -> {
+
+            }
+            CommunityPostViewModelInStates.UnenrolledCommunity -> {
+                _isEnrolled.postValue(false)
             }
         }
     }

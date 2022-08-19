@@ -37,12 +37,13 @@ class CommunityFragment : MultistackBaseFragment(
     private val viewModel by viewModels<CommunityViewModel>()
     private val binding by viewBinding(FragmentCommunityBinding::bind)
     private val adapter = CommunityAdapter {
-        sendUserToCommunityPostFragment(it)
+        sendUserToCommunityPostFragment(it, viewModel.isEnrolledCommunities)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.init(CommunityViewModelInState.SearchViewClosed)
         binding.communityRecyclerView.apply {
             adapter = this@CommunityFragment.adapter
             setHasFixedSize(true)
@@ -91,9 +92,17 @@ class CommunityFragment : MultistackBaseFragment(
         findChildNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToAddCommunityFragment())
     }
 
-    private fun sendUserToCommunityPostFragment(community: CommunityModel) {
+    private fun sendUserToCommunityPostFragment(
+        community: CommunityModel,
+        isEnrolledCommunity: Boolean
+    ) {
         (parentFragment?.parentFragment)?.findNavController()
-            ?.navigate(RootFragmentDirections.actionRootFragmentToCommunityPostFragment(community))
+            ?.navigate(
+                RootFragmentDirections.actionRootFragmentToCommunityPostFragment(
+                    community,
+                    isEnrolledCommunity
+                )
+            )
 
     }
 }

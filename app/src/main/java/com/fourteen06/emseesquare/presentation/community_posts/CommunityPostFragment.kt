@@ -104,6 +104,13 @@ class CommunityPostFragment : Fragment(
         }
         binding.communityAvatar.load(args.community.communityImage)
         binding.title.text = (args.community.communityName)
+
+        if (args.isEnrolledCommunity) {
+            binding.joinCommunityButton.visibility = View.GONE
+            binding.included.root.visibility = View.VISIBLE
+        } else {
+            viewModel.init(CommunityPostViewModelInStates.UnenrolledCommunity)
+        }
         binding.postRecyclerView.apply {
             adapter = this@CommunityPostFragment.adapter
             layoutManager =
