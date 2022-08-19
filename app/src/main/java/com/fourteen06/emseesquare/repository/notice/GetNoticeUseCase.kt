@@ -11,7 +11,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.orhanobut.logger.Logger
 import com.zhuinden.flowcombinetuplekt.combineTuple
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,7 +27,7 @@ class GetNoticeUseCase @Inject constructor(
     private fun getActiveNotice(): Flow<List<NoticeModel>> {
         return firestoreRef.collection(NOTICE_COLLECTION)
             .orderBy(NoticeModel.TIME, Query.Direction.DESCENDING)
-            .asFlow().map { snapshots ->
+            .asFlow().flowOn(Dispatchers.Default).map { snapshots ->
                 snapshots.map {
                     it.toNotice { uid ->
                         when (val user = userUserCase.getUserById(uid)) {
@@ -47,7 +49,7 @@ class GetNoticeUseCase @Inject constructor(
             }
     }
 
-    operator fun invoke() =
+    operator fun invoke(showPinned: Boolean) =
         combineTuple(
             getActiveNotice(),
             getUserPinnedNoticesUseCase()
@@ -60,6 +62,10 @@ class GetNoticeUseCase @Inject constructor(
                         it.isPinned = true
                     }
                 }
+            }
+        }.map {
+            it.filter {
+                !showPinned || it.isPinned
             }
         }
 }

@@ -33,7 +33,13 @@ class NoticeAdapter(private val onPinNotice: (noticeId: String, noticeTime: Long
                 userSubtitle.text = spannable
                 noticeDescription.text = notice.content
                 userAvatarImageView.loadProfileImage(notice.user?.profileImageUrl)
-                pinsTextView.text = notice.pins.toString()
+                pinsTextView.text = if (notice.pins == 0L) {
+                    "No Pins"
+                } else if (notice.pins == 1L) {
+                    "1 Pin"
+                } else {
+                    "${notice.pins} Pins"
+                }
                 pinImageView.setOnClickListener {
                     onPinNotice(notice.id, notice.time.time, !notice.isPinned)
                     if (notice.isPinned) {
@@ -53,7 +59,7 @@ class NoticeAdapter(private val onPinNotice: (noticeId: String, noticeTime: Long
                                 arrayOf(notice.attachmentType.imageUrl)
                             ) { imageView, url ->
                                 imageView.load(url, false)
-                            }.withTransitionFrom(binding.contentImage).withHiddenStatusBar(false)
+                            }.withHiddenStatusBar(false)
                                 .show()
                         }
                     }

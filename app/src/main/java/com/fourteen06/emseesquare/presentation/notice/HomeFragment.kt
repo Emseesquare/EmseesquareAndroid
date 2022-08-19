@@ -1,7 +1,9 @@
 package com.fourteen06.emseesquare.presentation.notice
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +30,7 @@ class HomeFragment : MultistackBaseFragment(
     lateinit var noticeAdapter: NoticeAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var binding: FragmentHomeBinding
-
+    lateinit var menuItem: MenuItem
 
     @Inject
     lateinit var addNoticeUseCase: AddNoticeUseCase
@@ -59,9 +61,37 @@ class HomeFragment : MultistackBaseFragment(
                 is HomeOutState.MakeToast -> makeShortToast(it.message)
             }
         }
+        viewModel.pinnedStatus.observe(viewLifecycleOwner) {
+            if (it == true) {
+                changeIcon(R.drawable.ic_pin_filled)
+            } else {
+                changeIcon(R.drawable.ic_pin_outlined)
+
+            }
+        }
     }
 
     private fun sendUserToAddNotice() {
         findChildNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddNotice())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.home_menu_option_pin) {
+            this.menuItem = item
+            if (viewModel.pinnedStatus.value == true) {
+                viewModel.init(HomeInState.ShowAllNotices)
+            } else {
+                viewModel.init(HomeInState.ShowPinnedNotices)
+
+            }
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun changeIcon(@DrawableRes resId: Int) {
+        if (this::menuItem.isInitialized) {
+            menuItem.setIcon(resId)
+        }
     }
 }
